@@ -51,9 +51,23 @@ io.on("connection", function (uniquesocket) {
 
       const result = chess.move(move);
       if (result) {
-        currentPlayer = chess.turn();
+        currentplayer = chess.turn();
         io.emit("move", move);
         io.emit("boardState", chess.fen());
+
+        if (chess.isGameOver()) {
+          let gameOverMessage = "";
+          if (chess.isCheckmate()) {
+            gameOverMessage = `Checkmate! ${
+              chess.turn() === "w" ? "Black" : "White"
+            } wins!`;
+          } else if (chess.isDraw()) {
+            gameOverMessage = "Game ended in a draw!";
+          }
+          io.emit("gameOver", gameOverMessage);
+        } else if (chess.isCheck()) {
+          io.emit("inCheck", chess.turn());
+        }
       } else {
         console.log("Invalid move : ", move);
         uniquesocket.emit("invalidMove", move);

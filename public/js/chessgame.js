@@ -71,6 +71,53 @@ const renderBoard = () => {
   }
 };
 
+const renderResult = () => {
+  if (chess.isGameOver()) {
+    let message = "";
+    if (chess.isCheckmate()) {
+      message = `Checkmate! ${
+        chess.turn() === "w" ? "Black" : "white"
+      } wins!`;
+    } else if (chess.isDraw()) {
+      if (chess.isStalemate()) {
+        message = "Game over - Stalemate!";
+      } else if (chess.isThreefoldRepetition()) {
+        message = "Game over - Threefold Repetition!";
+      } else if (chess.isInsufficientMaterial()) {
+        message = "Game over - Draw by Insufficient Material!";
+      } else {
+        message = "Game over - Draw!";
+      }
+    }
+
+    displayGameMessage(message);
+  } else if (chess.isCheck()) {
+    displayGameMessage("Check!");
+  }
+}
+
+const displayGameMessage = (message) => {
+  let messageElement = document.getElementById("game-message");
+  if(!messageElement) {
+    messageElement = document.createElement("div");
+    messageElement.id = "game-message";
+    messageElement.classList.add("game-message");
+    document.body.appendChild(messageElement);
+
+  }
+  messageElement.textContent = message;
+}
+
+const disableDrag = () => {
+  const squares = document.querySelectorAll(".square");
+  squares.forEach((square) => {
+    const piece = square.querySelector(".piece");
+    if (piece) {
+      piece.draggable = false;
+    }
+  })
+}
+
 const handleMove = (source, target) => {
   const move = {
     from: `${String.fromCharCode(97 + source.col)}${8 - source.row}`,
@@ -118,6 +165,21 @@ socket.on("boardState", function (fen) {
 socket.on("move", function (move) {
   chess.move(move);
   renderBoard();
+  renderResult();
 });
+
+socket.on("inCheck",function(color){
+  if(color === playerRole){
+    displayGameMessage("You are in check!");
+  }
+  else{
+    displayGameMessage("Your Opponent is in check!");
+  }
+})
+
+socket.on("gameOver", function (message){
+  displayGameMessage(message);
+  disableDrag();
+})
 
 renderBoard();
