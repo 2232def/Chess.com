@@ -45,22 +45,22 @@ io.on("connection", function (uniquesocket) {
 
   uniquesocket.on("move", (move) => {
     try {
-    // white kai time pai white chal payega aur black kai time pai black chal payega 
+      // white kai time pai white chal payega aur black kai time pai black chal payega
       if (chess.turn() === "w" && uniquesocket.id !== players.white) return;
       if (chess.turn() === "b" && uniquesocket.id !== players.black) return;
-      
+
       const result = chess.move(move);
-      if(result){
-      currentPlayer = chess.turn();  
-      io.emit("move", move);
-      io.emit("boardState", chess.fen());
+      if (result) {
+        currentPlayer = chess.turn();
+        io.emit("move", move);
+        io.emit("boardState", chess.fen());
       } else {
         console.log("Invalid move : ", move);
         uniquesocket.emit("invalidMove", move);
       }
     } catch (err) {
       console.log(err);
-      uniquesocket.emit("Invalid move : ", move );
+      uniquesocket.emit("Invalid move : ", move);
     }
   });
 });
