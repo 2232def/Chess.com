@@ -166,6 +166,7 @@ socket.on("move", function (move) {
   chess.move(move);
   renderBoard();
   renderResult();
+  
 });
 
 socket.on("inCheck",function(color){
