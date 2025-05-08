@@ -55,17 +55,17 @@ io.on("connection", function (uniquesocket) {
         io.emit("move", move);
         io.emit("boardState", chess.fen());
 
-        if (chess.isGameOver()) {
+        if (chess.game_over()) {
           let gameOverMessage = "";
-          if (chess.isCheckmate()) {
+          if (chess.in_checkmate()) {
             gameOverMessage = `Checkmate! ${
               chess.turn() === "w" ? "Black" : "White"
             } wins!`;
-          } else if (chess.isDraw()) {
+          } else if (chess.in_draw()) {
             gameOverMessage = "Game ended in a draw!";
           }
           io.emit("gameOver", gameOverMessage);
-        } else if (chess.isCheck()) {
+        } else if (chess.in_check()) {
           io.emit("inCheck", chess.turn());
         }
       } else {

@@ -1,5 +1,5 @@
 const socket = io();
-const chess = new Chess();
+const chess = new Chess()
 const boardElement = document.querySelector(".chessboard");
 
 let draggedPiece = null;
@@ -72,18 +72,17 @@ const renderBoard = () => {
 };
 
 const renderResult = () => {
-  if (chess.isGameOver()) {
+  if (chess.game_over()) {
+    console.log("Game Over");
     let message = "";
-    if (chess.isCheckmate()) {
-      message = `Checkmate! ${
-        chess.turn() === "w" ? "Black" : "white"
-      } wins!`;
-    } else if (chess.isDraw()) {
-      if (chess.isStalemate()) {
+    if (chess.in_checkmate()) {
+      message = `Checkmate! ${chess.turn() === "w" ? "Black" : "white"} wins!`;
+    } else if (chess.in_draw()) {
+      if (chess.in_stalemate()) {
         message = "Game over - Stalemate!";
-      } else if (chess.isThreefoldRepetition()) {
+      } else if (chess.in_threefold_repetition()) {
         message = "Game over - Threefold Repetition!";
-      } else if (chess.isInsufficientMaterial()) {
+      } else if (chess.insufficient_material()) {
         message = "Game over - Draw by Insufficient Material!";
       } else {
         message = "Game over - Draw!";
@@ -91,22 +90,26 @@ const renderResult = () => {
     }
 
     displayGameMessage(message);
-  } else if (chess.isCheck()) {
-    displayGameMessage("Check!");
   }
-}
+};
+
+
+socket.on("inCheck", function (color) {
+  if (color === playerRole) {
+    displayGameMessage("You are in check!");
+  } else {
+    displayGameMessage("Your Opponent is in check!");
+  }
+});
 
 const displayGameMessage = (message) => {
-  let messageElement = document.getElementById("game-message");
-  if(!messageElement) {
-    messageElement = document.createElement("div");
-    messageElement.id = "game-message";
-    messageElement.classList.add("game-message");
-    document.body.appendChild(messageElement);
-
-  }
+  messageElement = document.createElement("div");
+  messageElement.classList.add("game-message");
+  messageElement.style.cssText =
+    "position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 24px; color: red; z-index: 1000; background-color: rgba(255, 255, 255, 0.8); padding: 10px;";
+  document.body.appendChild(messageElement);
   messageElement.textContent = message;
-}
+};
 
 const disableDrag = () => {
   const squares = document.querySelectorAll(".square");
@@ -115,8 +118,8 @@ const disableDrag = () => {
     if (piece) {
       piece.draggable = false;
     }
-  })
-}
+  });
+};
 
 const handleMove = (source, target) => {
   const move = {
@@ -130,13 +133,13 @@ const handleMove = (source, target) => {
 
 const getPieceUnicode = (piece) => {
   const unicodePieces = {
-    p: "♟",
+    p: "♙",
     r: "♖",
     n: "♘",
     b: "♗",
     q: "♕",
     k: "♔",
-    P: "♙",
+    P: "♟",
     R: "♜",
     N: "♞",
     B: "♝",
@@ -166,21 +169,25 @@ socket.on("move", function (move) {
   chess.move(move);
   renderBoard();
   renderResult();
-  
+
+  if (!chess.in_check()) {
+    clearGameMessage();
+  }
+
 });
 
-socket.on("inCheck",function(color){
-  if(color === playerRole){
-    displayGameMessage("You are in check!");
-  }
-  else{
-    displayGameMessage("Your Opponent is in check!");
-  }
-})
 
-socket.on("gameOver", function (message){
+
+const clearGameMessage = () => {
+  const messageElement = document.getElementById("game-message");
+  if (messageElement) {
+    messageElement.textContent = "";
+  }
+};
+
+socket.on("gameOver", function (message) {
   displayGameMessage(message);
   disableDrag();
-})
+});
 
 renderBoard();
