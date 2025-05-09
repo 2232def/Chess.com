@@ -105,6 +105,7 @@ socket.on("inCheck", function (color) {
 const displayGameMessage = (message) => {
   messageElement = document.createElement("div");
   messageElement.classList.add("game-message");
+  messageElement.id = "game-message";
   messageElement.style.cssText =
     "position: absolute; top: 10px; left: 50%; transform: translateX(-50%); font-size: 24px; color: red; z-index: 1000; background-color: rgba(255, 255, 255, 0.8); padding: 10px;";
   document.body.appendChild(messageElement);
@@ -171,9 +172,8 @@ socket.on("move", function (move) {
   renderResult();
 
   if (!chess.in_check()) {
-    clearGameMessage();
+    clearGameMessage(); 
   }
-
 });
 
 
@@ -181,7 +181,7 @@ socket.on("move", function (move) {
 const clearGameMessage = () => {
   const messageElement = document.getElementById("game-message");
   if (messageElement) {
-    messageElement.textContent = "";
+    messageElement.remove();
   }
 };
 

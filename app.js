@@ -65,6 +65,7 @@ io.on("connection", function (uniquesocket) {
             gameOverMessage = "Game ended in a draw!";
           }
           io.emit("gameOver", gameOverMessage);
+          console.log("game is over", gameOverMessage);
         } else if (chess.in_check()) {
           io.emit("inCheck", chess.turn());
         }
