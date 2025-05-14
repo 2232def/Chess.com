@@ -1,11 +1,12 @@
 const socket = io();
-const chess = new Chess()
+const chess = new Chess();
 const boardElement = document.querySelector(".chessboard");
-
+const whiteTimer = document.querySelector(".timer2");
+const blackTimer = document.querySelector(".timer1");
 let draggedPiece = null;
 let sourceSquare = null;
 let playerRole = null;
-
+let timerFlipped = false;
 const renderBoard = () => {
   const board = chess.board();
   boardElement.innerHTML = "";
@@ -93,7 +94,6 @@ const renderResult = () => {
   }
 };
 
-
 socket.on("inCheck", function (color) {
   if (color === playerRole) {
     displayGameMessage("You are in check!");
@@ -153,11 +153,15 @@ const getPieceUnicode = (piece) => {
 
 socket.on("playerRole", function (role) {
   playerRole = role;
+
+  timerFlipped = role === "b";
+
   renderBoard();
 });
 
 socket.on("spectatorRole", function () {
   playerRole = null;
+  timerFlipped = false;
   renderBoard();
 });
 
@@ -172,11 +176,25 @@ socket.on("move", function (move) {
   renderResult();
 
   if (!chess.in_check()) {
-    clearGameMessage(); 
+    clearGameMessage();
   }
 });
 
+socket.on("timerUpdate", function (timers) {
+  if (timerFlipped) {
+    whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
+    blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
+  } else {
+    blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
+    whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
+  }
+});
 
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  return `${min}:${sec.toString().padStart(2, "0")}`;
+}
 
 const clearGameMessage = () => {
   const messageElement = document.getElementById("game-message");

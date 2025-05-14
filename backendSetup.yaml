@@ -76,6 +76,11 @@
     - Implement countdown timer for each player
     - Emit "timer" event with remaining time
     - Handle timeouts and end game if time runs out
+- Handle timer:
+    - Implement countdown timer for each player
+    - Emit "timer" event with remaining time
+    - Handle timeouts and end game if time runs out
+    
 ##############################################################################################################################
 
 - Ensure smooth gameplay and real-time updates for all connected clients.

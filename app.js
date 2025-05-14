@@ -3,6 +3,13 @@ const socket = require("socket.io");
 const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
+const {
+  initTimers,
+  startTimer,
+  stopTimer,
+  resetTimers,
+  getTimers,
+} = require("./public/js/timer");
 
 const app = express();
 
@@ -33,13 +40,26 @@ io.on("connection", function (uniquesocket) {
     uniquesocket.emit("spectatorRole");
   }
 
+  if (players.white && players.black) {
+    initTimers(io);
+    startTimer(chess.turn());
+  }
+
   uniquesocket.on("disconnect", function () {
     if (uniquesocket.id === players.white) {
       delete players.white;
       console.log("white disconnected");
+      io.emit("gameOver", "White disconnected. Black wins!");
+      chess.reset();
+      players = {};
+      resetTimers(io);
     } else if (uniquesocket.id === players.black) {
       delete players.black;
       console.log("black disconnected");
+      io.emit("gameOver", "Black disconnected. White wins!");
+      chess.reset();
+      players = {};
+      resetTimers(io);
     }
   });
 
@@ -56,6 +76,8 @@ io.on("connection", function (uniquesocket) {
         io.emit("boardState", chess.fen());
 
         if (chess.game_over()) {
+          stopTimer("w");
+          stopTimer("b");
           let gameOverMessage = "";
           if (chess.in_checkmate()) {
             gameOverMessage = `Checkmate! ${
@@ -68,6 +90,9 @@ io.on("connection", function (uniquesocket) {
           console.log("game is over", gameOverMessage);
         } else if (chess.in_check()) {
           io.emit("inCheck", chess.turn());
+        } else {
+          startTimer(chess.turn(), io);
+          stopTimer(chess.turn() === "w" ? "b" : "w");
         }
       } else {
         console.log("Invalid move : ", move);
@@ -77,6 +102,10 @@ io.on("connection", function (uniquesocket) {
       console.log(err);
       uniquesocket.emit("Invalid move : ", move);
     }
+  });
+
+  uniquesocket.on("getTimers", () => {
+    io.emit("timerUpdate", getTimers());
   });
 });
 
