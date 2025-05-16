@@ -1,8 +1,15 @@
 const socket = io();
 const chess = new Chess();
 const boardElement = document.querySelector(".chessboard");
-const whiteTimer = document.querySelector(".timer2");
-const blackTimer = document.querySelector(".timer1");
+let whiteTimer = document.createElement("div");
+whiteTimer.classList.add("timer1");
+let blackTimer = document.createElement("div");
+blackTimer.classList.add("timer2");
+whiteTimer.innerHTML = "White: 5:00".toUpperCase;
+blackTimer.innerHTML = "Black: 5:00".toUpperCase;
+
+document.body.appendChild(whiteTimer);
+document.body.appendChild(blackTimer);
 let draggedPiece = null;
 let sourceSquare = null;
 let playerRole = null;
@@ -62,6 +69,7 @@ const renderBoard = () => {
         }
       });
       boardElement.appendChild(squareElement);
+      squareElement.blur();
     });
   });
 
@@ -154,7 +162,7 @@ const getPieceUnicode = (piece) => {
 socket.on("playerRole", function (role) {
   playerRole = role;
 
-  timerFlipped = role === "b";
+  timerFlipped = role === "w";
 
   renderBoard();
 });
@@ -180,11 +188,20 @@ socket.on("move", function (move) {
   }
 });
 
+//Timer update and Timer fliped
 socket.on("timerUpdate", function (timers) {
   if (timerFlipped) {
+    whiteTimer.style.cssText =
+      "position: absolute; bottom: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000; ";
+    blackTimer.style.cssText =
+      "position: absolute; top:100px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; z-index: 1000;";
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
   } else {
+    whiteTimer.style.cssText =
+      "position: absolute; top: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000;";
+    blackTimer.style.cssText =
+      "position: absolute; bottom: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000;";
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
   }

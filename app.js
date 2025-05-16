@@ -89,6 +89,8 @@ io.on("connection", function (uniquesocket) {
           io.emit("gameOver", gameOverMessage);
           console.log("game is over", gameOverMessage);
         } else if (chess.in_check()) {
+          startTimer(chess.turn(), io);
+          stopTimer(chess.turn() === "w" ? "b" : "w");
           io.emit("inCheck", chess.turn());
         } else {
           startTimer(chess.turn(), io);
