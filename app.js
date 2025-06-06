@@ -30,6 +30,10 @@ app.get("/play", function (req, res) {
   res.render("index");
 });
 
+app.get("/custom",function(req, res){
+  res.render("custom");
+})
+
 io.on("connection", function (uniquesocket) {
   console.log("connected");
 

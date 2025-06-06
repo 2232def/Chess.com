@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: gray;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .p{
+            text-align: center;
+            font-size: 5vw;
+        }
+        .cards{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .card{
+            width: 25vw;
+            height: 30vw;
+            background-color: white;
+            margin: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+         }
+    </style>
+    <div class="container">
+        <h1 class="p">Play Custom Modes</h1>
+        <div>
+            <div class="cards">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

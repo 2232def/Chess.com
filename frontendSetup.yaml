@@ -37,3 +37,8 @@ Home page:
 Make a home page for the chess game using EJS templating engine. For now player should see the play button ,numbers of Timers etc.
 Add invite option like a url generator to join the game.
 Imporve the UI of the main chess page.
+
+Timer Page and custom play page:
+Add different timers for the game like 5 minutes, 10 minutes, 15 minutes etc.
+Add a custom play page where players can set their own timers and game settings.
+Add invite option which generate a sharelable link to join the game.
