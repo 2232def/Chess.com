@@ -84,3 +84,6 @@
 ##############################################################################################################################
 
 - Ensure smooth gameplay and real-time updates for all connected clients.
+
+- Some bugs to solve:
+    - Players should not be able to move pieces untill and unless opponent player connects.

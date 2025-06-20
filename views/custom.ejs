@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <style>
         body {
@@ -12,41 +14,112 @@
             padding: 0;
             background-color: gray;
         }
+
         .container {
             width: 100vw;
             height: 100vh;
             overflow: hidden;
         }
-        .p{
+
+        .p {
             text-align: center;
             font-size: 5vw;
         }
-        .cards{
+
+        .cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 20px;
         }
-        .card{
+
+        .card {
             width: 25vw;
             height: 30vw;
             background-color: white;
             margin: 5px;
             border-radius: 10px;
-            cursor: pointer;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-         }
+        }
+
+        .Bullet {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+        .Rapid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+        .Blitz {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        .bu {
+            text-decoration: none;
+            color: black;
+            border-radius: 5px;
+            background-color: lightgray;
+            cursor: pointer;
+        }
     </style>
     <div class="container">
         <h1 class="p">Play Custom Modes</h1>
         <div>
             <div class="cards">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+                <div class="card">
+                    <div>
+                        <h1>Play Time bound</h1>
+                    </div>
+                    <div class="play-time-bound">
+                        <h2>Bullet</h2>
+                        <div class="Bullet ">
+                            <button href="" class="bu">1 min</button>
+                            <button href="" class="bu">1|1</button>
+                            <button href="" class="bu">2|1</button>
+                        </div>
+                        <h2>Blitz</h2>
+                        <div class="Blitz">
+                            <button href="" class="bu">3 min</button>
+                            <button href="" class="bu">3|2</button>
+                            <button href="" class="bu">5 min</button>
+                        </div>
+                        <h2>Rapid</h2>
+                        <div class="Rapid">
+
+                            <button href="" class="bu">10 min</button>
+                            <button href="" class="bu">15 min</button>
+                            <button href="" class="bu">30 min</button>
+                        </div>
+                        <button class="play-time-button">Play</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <h1>Play Time bound</h1>
+                    </div>
+                    <div class="play-time-bound">
+                        <button class="play-time-button">Play</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <h1>Play Time bound</h1>
+                    </div>
+                    <div class="play-time-bound">
+                        <button class="play-time-button">Play</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
