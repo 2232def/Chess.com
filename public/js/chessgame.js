@@ -193,16 +193,16 @@ socket.on("move", function (move) {
 socket.on("timerUpdate", function (timers) {
   if (timerFlipped) {
     whiteTimer.style.cssText =
-      "position: absolute; bottom: 100px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000; ";
+      "position: absolute; bottom: 50px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black;  ";
     blackTimer.style.cssText =
-      "position: absolute; top:100px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; z-index: 1000;";
+      "position: absolute; top:50px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; ";
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
   } else {
     whiteTimer.style.cssText =
-      "position: absolute; top: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000;";
+      "position: absolute; top: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
     blackTimer.style.cssText =
-      "position: absolute; bottom: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000;";
+      "position: absolute; bottom: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
   }
