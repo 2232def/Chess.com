@@ -83,11 +83,14 @@
 </head>
 
 <body>
-  <div class="w-[100vw] h-[100vh] flex flex-col items-center justify-center bg-zinc-900 gap-8">
+  <div class="w-[100vw] h-[100vh] flex items-center justify-center relative bg-zinc-900 gap-8">
 
     <div class="chessboard bg-red-800 "></div>
-        <!-- <div class="timer1">Black: 5:00</div>
+    <!-- <div class="timer1">Black: 5:00</div>
     <div class="timer2">White: 5:00</div> -->
+    <button id="copyLinkBtn" class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Share Game Link
+    </button>
   </div>
 
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
@@ -96,8 +99,29 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
     integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const urlParts = window.location.pathname.split('/');
+    const roomId = urlParts.length > 2 ? urlParts[2] : null;
+
+    window.socket = io({
+      query: {
+        roomId: roomId
+      }
+    })
+
+    document.getElementById('copyLinkBtn').addEventListener('click', function () {
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => {
+          alert('Game link copied to clipboard!');
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+    })
+  </script>
   <script src="/js/chessgame.js"></script>
   <script src="/js/timer.js"></script>
+
 </body>
 
 </html>

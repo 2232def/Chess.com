@@ -11,7 +11,8 @@ let intervalIds = {
 
 function initTimers(io) {
   _io = io;
-  timers = { w: 300, b: 300 };
+  timers.w = 300; // Reset to 5 minutes
+  timers.b = 300; // Reset to 5 minutes
   io.emit("timerUpdate", timers);
 }
 
@@ -46,7 +47,8 @@ function stopTimer(color) {
 }
 
 function resetTimers(io) {
-  timers = { w: 300, b: 300 };
+  timers.w = 300; // Reset to 5 minutes
+  timers.b = 300; // Reset to 5 minutes
   stopTimer("w");
   stopTimer("b");
   io.emit("timerUpdate", timers);

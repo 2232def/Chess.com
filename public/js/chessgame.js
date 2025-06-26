@@ -1,4 +1,4 @@
-const socket = io();
+const socket = window.socket
 const chess = new Chess();
 const boardElement = document.querySelector(".chessboard");
 let whiteTimer = document.createElement("div");
