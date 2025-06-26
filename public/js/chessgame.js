@@ -1,4 +1,4 @@
-const socket = window.socket
+const socket = window.socket;
 const chess = new Chess();
 const boardElement = document.querySelector(".chessboard");
 let whiteTimer = document.createElement("div");
@@ -14,6 +14,7 @@ let draggedPiece = null;
 let sourceSquare = null;
 let playerRole = null;
 let timerFlipped = false;
+
 const renderBoard = () => {
   const board = chess.board();
   boardElement.innerHTML = "";
@@ -192,7 +193,7 @@ socket.on("move", function (move) {
 socket.on("timerUpdate", function (timers) {
   if (timerFlipped) {
     whiteTimer.style.cssText =
-      "position: absolute; bottom: 100px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000; ";
+      "position: absolute; bottom: 100px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black; z-index: 1000; ";
     blackTimer.style.cssText =
       "position: absolute; top:100px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; z-index: 1000;";
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;

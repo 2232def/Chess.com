@@ -165,7 +165,7 @@ io.on("connection", function (uniquesocket) {
   });
 
   uniquesocket.on("getTimers", () => {
-    io.emit("timerUpdate", getTimers());
+    io.to(roomId).emit("timerUpdate", getTimers());
   });
 });
 
