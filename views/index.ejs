@@ -83,12 +83,22 @@
 </head>
 
 <body>
-  <div class="w-[100vw] h-[100vh] flex items-center justify-center relative bg-zinc-900 gap-8">
+  <div class="w-[100vw] h-[100vh] flex items-center justify-center flex-col relative bg-zinc-900 gap-8">
+    <div class="player1 h-[10vh]  w-[400px] relative ">
+      <div class="square h-[2vw] w-[2vw] absolute left-0 bottom-0  border-2 border-green-500 bg-white ">
 
+      </div>
+    </div>
     <div class="chessboard bg-red-800 "></div>
+    <div class="player2 h-[10vh]  w-[400px] relative ">
+      <div class="square h-[2vw] absolute left-0 top-0 w-[2vw] border-2 border-green-500 bg-white ">
+
+      </div>
+    </div>
     <!-- <div class="timer1">Black: 5:00</div>
     <div class="timer2">White: 5:00</div> -->
-    <button id="copyLinkBtn" class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <button id="copyLinkBtn"
+      class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       Share Game Link
     </button>
   </div>
@@ -119,7 +129,7 @@
         });
     })
   </script>
-  
+
   <script src="/js/chessgame.js"></script>
   <script src="/js/timer.js"></script>
 

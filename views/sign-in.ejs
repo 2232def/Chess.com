@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Chess Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 min-h-screen flex items-center justify-center">
+    
+        <div id="clerk-signin"></div>
+
+    <!-- Correct Clerk Script -->
+    <script
+        async
+        crossorigin="anonymous"
+        data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
+        src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+        type="text/javascript"
+    ></script>
+    
+    <script>
+        window.addEventListener('load', async () => {
+            // Wait for Clerk to load
+            await window.Clerk.load();
+            
+            const signInDiv = document.getElementById('clerk-signin');
+            window.Clerk.mountSignIn(signInDiv, {
+                redirectUrl: '/play',
+                signInUrl: '/sign-in'
+            });
+        });
+    </script>
+</body>
+</html>

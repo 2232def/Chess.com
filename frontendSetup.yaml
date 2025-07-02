@@ -42,3 +42,7 @@ Timer Page and custom play page:
 Add different timers for the game like 5 minutes, 10 minutes, 15 minutes etc.
 Add a custom play page where players can set their own timers and game settings.
 Add invite option which generate a sharelable link to join the game.
+
+User Authentication:
+Implement user authentication using Clerk.
+

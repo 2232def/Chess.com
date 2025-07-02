@@ -14,7 +14,15 @@
             background-color: rgb(56, 57, 54);
         }
     </style>
-    <div class="homepage p-20 h-[100vh] w-[100vw] flex flex-col items-center justify-center space-y-10 overflow-hidden">
+    <div
+        class="homepage p-20 h-[100vh] w-[100vw] flex flex-col items-center justify-center space-y-10 overflow-hidden relative">
+        <button>
+
+            <div onclick="window.location.href='/sign-in'"
+                class=" bg-blue-200 rounded-md px-7 py-3 absolute top-3 right-3 cursor-pointer hover:scale-105 duration-300 border-blue-500">
+                Sign Up</div>
+        </button>
+
         <h1 class="text-6xl font-bold text-white">CHESS GAME</h1>
         <div class=" flex flex-wrap lg:space-x-[20vw] space-y-10  items-center justify-center ">
             <img src="../assets/image.png" class="h-[50vh] w-[50vw] object-cover " alt="">

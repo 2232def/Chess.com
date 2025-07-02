@@ -1,8 +1,16 @@
+require("dotenv").config();
+
 const express = require("express");
 const socket = require("socket.io");
 const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
+const {
+  clerkMiddleware,
+  requireAuth,
+  clerkClient,
+  getAuth,
+} = require("@clerk/express");
 const { v4: uuidv4 } = require("uuid");
 const {
   initTimers,
@@ -11,6 +19,7 @@ const {
   resetTimers,
   getTimers,
 } = require("./public/js/timer");
+const { url } = require("inspector");
 
 const app = express();
 
@@ -25,15 +34,24 @@ const playerRooms = new Map();
 
 let currentplayer = "w";
 
+app.use(clerkMiddleware());
+
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", function (req, res) {
   res.render("homepage");
 });
-app.get("/play", function (req, res) {
-  res.render("index");
+
+app.get("/play", requireAuth({  signInUrl: '/sign-in' }),async function (req, res) {
+  const { userId } = getAuth(req);
+  const user = await clerkClient.users.getUser(userId);
+  res.render("index", { user });
 });
+
+app.get('/sign-in', (req, res) => {
+  res.render('sign-in')
+})
 
 app.get("/createlink", (req, res) => {
   const roomId = uuidv4();

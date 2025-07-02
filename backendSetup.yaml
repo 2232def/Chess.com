@@ -85,5 +85,12 @@
 
 - Ensure smooth gameplay and real-time updates for all connected clients.
 
+
+- User Authentication:
+    - Implement user authentication using Clerk.
+    - Ensure players can sign up and log in to play the game.
+    - Store user information securely and manage sessions.
+
+
 - Some bugs to solve:
     - Players should not be able to move pieces untill and unless opponent player connects.
