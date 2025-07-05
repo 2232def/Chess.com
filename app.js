@@ -39,19 +39,40 @@ app.use(clerkMiddleware());
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", function (req, res) {
-  res.render("homepage");
+app.get("/", async function (req, res) {
+  const { userId } = getAuth(req);
+  let user = null;
+  
+  // Only try to get user data if userId exists
+  if (userId) {
+    try {
+      user = await clerkClient.users.getUser(userId);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      // user remains null if there's an error
+    }
+  }
+  
+  res.render("homepage", { user });
 });
 
-app.get("/play", requireAuth({  signInUrl: '/sign-in' }),async function (req, res) {
+app.get("/play", requireAuth({ signInUrl: "/sign-in" }), async function (req, res) {
   const { userId } = getAuth(req);
-  const user = await clerkClient.users.getUser(userId);
+  let user = null;
+  
+  if (userId) {
+    try {
+      user = await clerkClient.users.getUser(userId);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }
+  
   res.render("index", { user });
 });
-
-app.get('/sign-in', (req, res) => {
-  res.render('sign-in')
-})
+app.get("/sign-in", (req, res) => {
+  res.render("sign-in");
+});
 
 app.get("/createlink", (req, res) => {
   const roomId = uuidv4();

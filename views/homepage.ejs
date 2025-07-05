@@ -18,9 +18,11 @@
         class="homepage p-20 h-[100vh] w-[100vw] flex flex-col items-center justify-center space-y-10 overflow-hidden relative">
         <div class="parent gap-10 flex w-[30vw] h-[20vh] absolute top-3 right-3 ">
             <div class=" rounded-md" id="app"></div>
-            <button onclick="window.location.href='/sign-in'"
-                class=" bg-blue-200 rounded-md px-7 py-3 h-[4rem] cursor-pointer hover:scale-105 duration-300 border-blue-500 ">
-                Sign Up</button>
+            <% if (!user) { %>
+                <button onclick="window.location.href='/sign-in'"
+                    class=" bg-blue-200 rounded-md px-7 py-3 h-[4rem] cursor-pointer hover:scale-105 duration-300 border-blue-500 ">
+                    Sign Up</button>
+                <% } %>
 
         </div>
         <h1 class="text-6xl font-bold text-white">CHESS GAME</h1>
@@ -36,7 +38,7 @@
     </div>
     <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
         src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
-    <script type="module" src="/js/userbutton.js"></script>
+    <script src="/js/userbutton.js"></script>
 </body>
 
 </html>
