@@ -10,10 +10,66 @@ blackTimer.innerHTML = "Black: 5:00".toUpperCase;
 
 document.body.appendChild(whiteTimer);
 document.body.appendChild(blackTimer);
+
 let draggedPiece = null;
 let sourceSquare = null;
 let playerRole = null;
 let timerFlipped = false;
+
+const preferredColor = socket.io.opts.query.preferredColor || null;
+
+let opponentName = null;
+let opponentId = null;
+let opponentColor = null;
+
+if (preferredColor) {
+  socket.emit("requestColor", preferredColor);
+}
+
+socket.on("forceColor", function (color) {
+  playerRole = color;
+  renderBoard();
+});
+
+socket.on("playerJoined", function (data) {
+  console.log("Player joined: ", data);
+
+  const isOpponent =
+    (playerRole === "w" && data.color === "black") ||
+    (playerRole === "b" && data.color === "white");
+
+  if (isOpponent) {
+    opponentName = data.name;
+    opponentId = data.userId;
+    opponentColor = data.color;
+
+    const opponentNameE1 = document.getElementById("opponentName");
+    const opponentRoleEl = document.getElementById("opponentRole");
+
+    if (opponentNameE1) {
+      opponentNameE1.textContent = opponentName || "Anonymous";
+    }
+
+    if (opponentRoleEl) {
+      opponentRoleEl.textContent = data.color === "white" ? "White" : "Black";
+    }
+
+    const opponentAvatar = document.querySelector(".player1 .square");
+    if (opponentAvatar) {
+      const firstLetter = opponentName
+        ? opponentName.charAt(0).toUpperCase()
+        : "?";
+      opponentAvatar.innerHTML = `<div class="h-full w-full flex items-center justify-center font-bold text-black">${firstLetter}</div>`;
+    }
+
+    console.log("Opponent Name: ", opponentName, opponentId, opponentColor);
+  }
+
+  if (data.userId === socket.io.opts.query.userId) {
+    document.getElementById("userRole").textContent =
+      data.color === "white" ? "White" : "Black";
+  }
+});
 
 const renderBoard = () => {
   const board = chess.board();

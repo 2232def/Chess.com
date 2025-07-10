@@ -88,6 +88,10 @@
       <div class="square h-[2vw] w-[2vw]  left-0 top-0 rounded-full border-2 flex border-green-500 bg-white ">
 
       </div>
+      <div class="text-white">
+        <p class="font-bold" id="opponentName">Waiting for opponent...</p>
+        <p class="text-xs text-gray-400" id="opponentRole">-</p>
+      </div>
     </div>
     <div class="chessboard bg-red-800 "></div>
     <div class="player2 h-[10vh]  w-[400px] relative flex items-center gap-3">
@@ -101,7 +105,13 @@
               <%= user.lastName || '' %>
           </p>
         </div>
-        <% } %>
+        <% } else { %>
+          <div class="text-white">
+            <p class="font-bold">Guest Player</p>
+            <p class="text-xs text-gray-400" id="userRole">-</p>
+          </div>
+          <% } %>
+
     </div>
     <button id="copyLinkBtn"
       class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -115,14 +125,36 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
     integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script src="ejs.js"></script> -->
+
   <script>
-    const urlParts = window.location.pathname.split('/');
-    const roomId = urlParts.length > 2 ? urlParts[2] : null;
+      <% if (typeof user !== 'undefined' && user) { %>
+      window.currentUser = {
+        id: '<%= user.id %>',
+          firstName: '<%= user.firstName %>',
+            lastName: '<%= user.lastName || "" %>',
+              email: '<%= user.emailAddresses[0]?.emailAddress %>'
+      };
+  <% } else { %>
+      window.currentUser = null;
+  <% } %>
+
+    // const urlParts = window.location.pathname.split('/');
+    // const roomId = urlParts.length > 2 ? urlParts[2] : null;
+
+    const roomId = '<%= roomId %>';
+    const assignedColor = '<%= assignedColor %>'; 
 
     window.socket = io({
       query: {
-        roomId: roomId
+        roomId: roomId,
+        userId: window.currentUser?.id || '',
+        userName: window.currentUser ?
+          (window.currentUser.firstName + ' ' + (window.currentUser.lastName || '')).trim() : 'Guest',
+        email: window.currentUser.email,
+        preferredColor: assignedColor || ""
       }
+
     })
 
     document.getElementById('copyLinkBtn').addEventListener('click', function () {
@@ -140,7 +172,7 @@
   <script src="/js/timer.js"></script>
   <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
-  <script src="../js/userbutton.js"></script>
+  <script src="/js/userbutton.js"></script>
 
 </body>
 

@@ -31,14 +31,104 @@
             <button onclick="window.location.href='/play'"
                 class=" bg-green-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-green-500"><span>Play</span></button>
         </div>
+        <div class="flex space-x-4">
+            <button onclick="window.location.href='/play'"
+                class="bg-green-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-green-500">
+                <span>Play vs Computer</span>
+            </button>
+
+            <button id="findMatchBtn"
+                class="bg-yellow-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-yellow-500">
+                <span>Find a Match</span>
+            </button>
+        </div>
+
+        <div id="matchmakingStatus" class="hidden mt-4 p-3 bg-gray-700 text-white rounded-md text-center">
+            <p id="matchmakingMessage">Looking for an opponent...</p>
+            <button id="cancelMatchBtn" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-sm">Cancel</button>
+        </div>
+
         <button onclick="window.location.href='/createlink'"
             class="bg-blue-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-blue-500">
             <span>Create Private Game</span>
         </button>
     </div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+        integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+        crossorigin="anonymous"></script>
     <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
         src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
+
     <script src="/js/userbutton.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elements
+            const findMatchBtn = document.getElementById('findMatchBtn');
+            const cancelMatchBtn = document.getElementById('cancelMatchBtn');
+            const matchmakingStatus = document.getElementById('matchmakingStatus');
+            const matchmakingMessage = document.getElementById('matchmakingMessage');
+
+            // Initialize socket
+            const socket = io();
+            let isInQueue = false;
+
+            findMatchBtn.addEventListener('click', async function () {
+                // Only proceed if user is logged in
+                if (!window.Clerk || !window.Clerk.user) {
+                    window.location.href = '/sign-in';
+                    return;
+                }
+
+                // Get user details from Clerk
+                const user = window.Clerk.user;
+                const userData = {
+                    userId: user.id,
+                    userName: `${user.firstName} ${user.lastName}`.trim(),
+                    email: user.emailAddresses && user.emailAddresses[0]
+                        ? user.emailAddresses[0].emailAddress
+                        : 'No email'
+                };
+
+                // Join the matchmaking queue
+                socket.emit('joinMatchmaking', userData);
+
+                // Update UI
+                matchmakingStatus.classList.remove('hidden');
+                findMatchBtn.classList.add('hidden');
+                isInQueue = true;
+            });
+
+            cancelMatchBtn.addEventListener('click', function () {
+                socket.emit('leaveMatchmaking');
+                matchmakingStatus.classList.add('hidden');
+                findMatchBtn.classList.remove('hidden');
+                isInQueue = false;
+            });
+
+            // Socket event handlers
+            socket.on('waitingForMatch', function (data) {
+                matchmakingMessage.textContent = data.message;
+            });
+
+            socket.on('matchFound', function (data) {
+                matchmakingMessage.textContent = `Match found! Starting game...`;
+
+                // Redirect to the game room
+                setTimeout(() => {
+                    window.location.href = `/play/${data.roomId}?color=${data.color}`;
+                }, 1500);
+            });
+
+            socket.on('matchmakingError', function (message) {
+                matchmakingMessage.textContent = `Error: ${message}`;
+                setTimeout(() => {
+                    matchmakingStatus.classList.add('hidden');
+                    findMatchBtn.classList.remove('hidden');
+                    isInQueue = false;
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 
 </html>
