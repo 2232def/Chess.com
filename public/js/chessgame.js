@@ -245,24 +245,24 @@ socket.on("move", function (move) {
   }
 });
 
-//Timer update and Timer fliped
-// socket.on("timerUpdate", function (timers) {
-//   if (timerFlipped) {
-//     whiteTimer.style.cssText =
-//       "position: absolute; bottom: 50px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black;  ";
-//     blackTimer.style.cssText =
-//       "position: absolute; top:50px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; ";
-//     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
-//     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
-//   } else {
-//     whiteTimer.style.cssText =
-//       "position: absolute; top: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
-//     blackTimer.style.cssText =
-//       "position: absolute; bottom: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
-//     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
-//     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
-//   }
-// });
+// Timer update and Timer fliped
+socket.on("timerUpdate", function (timers) {
+  if (timerFlipped) {
+    whiteTimer.style.cssText =
+      "position: absolute; bottom: 50px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black;  ";
+    blackTimer.style.cssText =
+      "position: absolute; top:50px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; ";
+    whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
+    blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
+  } else {
+    whiteTimer.style.cssText =
+      "position: absolute; top: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
+    blackTimer.style.cssText =
+      "position: absolute; bottom: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
+    blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
+    whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
+  }
+});
 
 function formatTime(seconds) {
   const min = Math.floor(seconds / 60);

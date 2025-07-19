@@ -185,23 +185,29 @@ io.on("connection", function (uniquesocket) {
     uniquesocket.emit("spectatorRole");
   }
 
-
-  if(game.players.white && game.playerProfiles.white && uniquesocket.id === game.players.black) {
-    uniquesocket.emit("playerJoined" , {
+  if (
+    game.players.white &&
+    game.playerProfiles.white &&
+    uniquesocket.id === game.players.black
+  ) {
+    uniquesocket.emit("playerJoined", {
       color: "white",
       name: game.playerProfiles.white.userName,
-      userId: game.playerProfiles.white.userId
+      userId: game.playerProfiles.white.userId,
     });
   }
 
-  if(game.players.black && game.playerProfiles.black && uniquesocket.id === game.players.white){
-    uniquesocket.emit("playerJoined" , {
+  if (
+    game.players.black &&
+    game.playerProfiles.black &&
+    uniquesocket.id === game.players.white
+  ) {
+    uniquesocket.emit("playerJoined", {
       color: "black",
       name: game.playerProfiles.black.userName,
-      userId: game.playerProfiles.black.userId
+      userId: game.playerProfiles.black.userId,
     });
   }
-
 
   if (game.players.white && game.players.black) {
     initTimers(io.to(roomId));
