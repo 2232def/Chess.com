@@ -62,59 +62,160 @@
       transform: rotate(180deg);
     }
 
-    .timer1 {
-      font-size: 2rem;
-      background-color: white;
+    /* Updated Timer Styles */
+    .timer1,
+    .timer2 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #2d3748, #4a5568);
+      color: white;
+      font-weight: bold;
+      font-family: 'Courier New', monospace;
       text-align: center;
-      padding: 20px;
-      width: 300px;
-      height: 50px;
+      border-radius: 8px;
+      border: 2px solid #718096;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      min-width: 120px;
+      padding: 8px 16px;
+      font-size: 1.2rem;
+    }
+
+    .timer1 {
+      top: 20px;
     }
 
     .timer2 {
-      font-size: 2rem;
-      background-color: white;
-      text-align: center;
-      padding: 20px;
-      width: 300px;
-      height: 50px;
+      bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .chessboard {
+        width: 320px;
+        height: 320px;
+      }
+
+      .timer1,
+      .timer2 {
+        font-size: 1rem;
+        min-width: 100px;
+        padding: 6px 12px;
+      }
+
+      .player1,
+      .player2 {
+        width: 320px !important;
+      }
+
+      .piece {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .chessboard {
+        width: 280px;
+        height: 280px;
+      }
+
+      .timer1,
+      .timer2 {
+        font-size: 0.9rem;
+        min-width: 90px;
+        padding: 5px 10px;
+      }
+
+      .player1,
+      .player2 {
+        width: 280px !important;
+        gap: 8px !important;
+      }
+
+      .piece {
+        font-size: 22px;
+      }
+    }
+
+    /* Game container responsive */
+    .game-container {
+      min-height: 100vh;
+      padding: 10px;
+    }
+
+    /* Player info responsive */
+    .player-info {
+      transition: all 0.3s ease;
+    }
+
+    @media (max-height: 600px) {
+      .game-container {
+        gap: 16px !important;
+      }
+
+      .timer1 {
+        top: 10px;
+      }
+
+      .timer2 {
+        bottom: 10px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="w-[100vw] h-[100vh] flex items-center justify-center flex-col relative bg-zinc-900 gap-8">
-    <div class="player1 h-[10vh] h-[10vh]  w-[400px] relative flex items-center gap-3">
-      <div class="square h-[2vw] w-[2vw]  left-0 top-0 rounded-full border-2 flex border-green-500 bg-white ">
-
+  <div class="game-container w-full h-screen flex items-center justify-center flex-col relative bg-zinc-900 gap-8">
+    <!-- Opponent (Player 1) -->
+    <div class="player1 h-[10vh] w-[400px] relative flex items-center gap-3 player-info">
+      <div class="square h-[3rem] w-[3rem] rounded-full border-2 flex border-green-500 bg-white">
+        <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
       </div>
-      <div class="text-white">
-        <p class="font-bold" id="opponentName">Waiting for opponent...</p>
-        <p class="text-xs text-gray-400" id="opponentRole">-</p>
+      <div class="text-white flex-1">
+        <p class="font-bold text-lg" id="opponentName">Waiting for opponent...</p>
+        <p class="text-sm text-gray-400" id="opponentRole">-</p>
+      </div>
+      <div class="text-right text-white">
+        <p class="text-sm text-gray-400">Opponent</p>
       </div>
     </div>
-    <div class="chessboard bg-red-800 "></div>
-    <div class="player2 h-[10vh]  w-[400px] relative flex items-center gap-3">
-      <div class="square h-[2vw] w-[2vw]  left-0 top-0 rounded-full border-2 flex border-green-500 bg-white ">
-        <div id="app" class="h-full w-full "></div>
-      </div>
-      <% if (user) { %>
-        <div class="">
-          <p class="font-bold text-white">
-            <%= user.firstName %>
-              <%= user.lastName || '' %>
-          </p>
-        </div>
-        <% } else { %>
-          <div class="text-white">
-            <p class="font-bold">Guest Player</p>
-            <p class="text-xs text-gray-400" id="userRole">-</p>
+
+    <!-- Chess Board -->
+    <div class="chessboard bg-red-800 relative"></div>
+
+    <!-- Current Player (Player 2) -->
+    <div class="player2 h-[10vh] w-[400px] relative flex items-center gap-3 player-info">
+      <div class="square h-[3rem] w-[3rem] rounded-full border-2 flex border-green-500 bg-white">
+        <% if (user) { %>
+          <div class="h-full w-full flex items-center justify-center font-bold text-black">
+            <%= user.firstName.charAt(0).toUpperCase() %>
           </div>
-          <% } %>
-
+        <% } else { %>
+          <div class="h-full w-full flex items-center justify-center font-bold text-black">G</div>
+        <% } %>
+      </div>
+      
+      <div class="text-white flex-1">
+        <% if (user) { %>
+          <p class="font-bold text-lg">
+            <%= user.firstName %> <%= user.lastName || '' %>
+          </p>
+          <p class="text-sm text-gray-400" id="userRole">-</p>
+        <% } else { %>
+          <p class="font-bold text-lg">Guest Player</p>
+          <p class="text-sm text-gray-400" id="userRole">-</p>
+        <% } %>
+      </div>
+      
+      <div class="text-right text-white">
+        <p class="text-sm text-gray-400">You</p>
+      </div>
     </div>
+
+    <!-- Copy Link Button -->
     <button id="copyLinkBtn"
-      class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200 z-50">
       Share Game Link
     </button>
   </div>

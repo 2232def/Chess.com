@@ -5,8 +5,10 @@ let whiteTimer = document.createElement("div");
 whiteTimer.classList.add("timer1");
 let blackTimer = document.createElement("div");
 blackTimer.classList.add("timer2");
-whiteTimer.innerHTML = "White: 5:00".toUpperCase;
-blackTimer.innerHTML = "Black: 5:00".toUpperCase;
+
+// Initialize timer content
+whiteTimer.innerHTML = "White: 5:00";
+blackTimer.innerHTML = "Black: 5:00";
 
 document.body.appendChild(whiteTimer);
 document.body.appendChild(blackTimer);
@@ -240,6 +242,9 @@ socket.on("move", function (move) {
   renderBoard();
   renderResult();
 
+  // Highlight active player's timer
+  highlightActiveTimer(chess.turn());
+
   if (!chess.in_check()) {
     clearGameMessage();
   }
@@ -248,17 +253,15 @@ socket.on("move", function (move) {
 // Timer update and Timer fliped
 socket.on("timerUpdate", function (timers) {
   if (timerFlipped) {
-    whiteTimer.style.cssText =
-      "position: absolute; bottom: 50px; left: 50%; text-align: center;  transform: translateX(-50%); font-size: 24px; color: black;  ";
-    blackTimer.style.cssText =
-      "position: absolute; top:50px; left: 50%; transform: translateX(-50%); font-size: 24px; color: black; text-align: center; ";
+    // White player perspective - white timer at bottom
+    whiteTimer.className = "timer2"; // Bottom position
+    blackTimer.className = "timer1"; // Top position
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
   } else {
-    whiteTimer.style.cssText =
-      "position: absolute; top: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
-    blackTimer.style.cssText =
-      "position: absolute; bottom: 50px; left: 50%; text-align: center; transform: translateX(-50%); font-size: 24px; color: black; ";
+    // Black player perspective - black timer at bottom
+    whiteTimer.className = "timer1"; // Top position
+    blackTimer.className = "timer2"; // Bottom position
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
   }
@@ -283,3 +286,14 @@ socket.on("gameOver", function (message) {
 });
 
 renderBoard();
+
+// Add active timer highlighting
+const highlightActiveTimer = (activeColor) => {
+  whiteTimer.style.borderColor = activeColor === 'w' ? '#10b981' : '#718096';
+  blackTimer.style.borderColor = activeColor === 'b' ? '#10b981' : '#718096';
+  
+  whiteTimer.style.boxShadow = activeColor === 'w' ? 
+    '0 0 10px rgba(16, 185, 129, 0.5)' : '0 4px 8px rgba(0, 0, 0, 0.3)';
+  blackTimer.style.boxShadow = activeColor === 'b' ? 
+    '0 0 10px rgba(16, 185, 129, 0.5)' : '0 4px 8px rgba(0, 0, 0, 0.3)';
+};
