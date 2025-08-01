@@ -73,9 +73,9 @@ app.get(
         console.error("Error fetching user:", error);
       }
     }
-    const roomId = `game_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+    const roomId = null;
 
-    res.render("index", { user, roomId: roomId, assignedColor: null });
+    res.render("index", { user, roomId, assignedColor: null });
   }
 );
 

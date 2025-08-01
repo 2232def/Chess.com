@@ -34,7 +34,6 @@ socket.on("forceColor", function (color) {
 });
 
 socket.on("playerJoined", function (data) {
-  console.log("Player joined: ", data);
 
   const isOpponent =
     (playerRole === "w" && data.color === "black") ||
@@ -64,7 +63,6 @@ socket.on("playerJoined", function (data) {
       opponentAvatar.innerHTML = `<div class="h-full w-full flex items-center justify-center font-bold text-black">${firstLetter}</div>`;
     }
 
-    console.log("Opponent Name: ", opponentName, opponentId, opponentColor);
   }
 
   if (data.userId === socket.io.opts.query.userId) {
@@ -107,6 +105,8 @@ const renderBoard = () => {
         pieceElement.addEventListener("dragend", (e) => {
           draggedPiece = null;
           sourceSquare = null;
+          // Clear all hover classes when drag ends
+          clearHoverClasses();
         });
 
         squareElement.appendChild(pieceElement);
@@ -114,6 +114,69 @@ const renderBoard = () => {
 
       squareElement.addEventListener("dragover", function (e) {
         e.preventDefault();
+
+        if (!draggedPiece || !sourceSquare) return;
+        clearHoverClasses();
+        const targetSquare = {
+          row: parseInt(squareElement.dataset.row),
+          col: parseInt(squareElement.dataset.col),
+        };
+
+        const move = {
+          from: `${String.fromCharCode(97 + sourceSquare.col)}${
+            8 - sourceSquare.row
+          }`,
+          to: `${String.fromCharCode(97 + targetSquare.col)}${
+            8 - targetSquare.row
+          }`,
+          promotion: "q",
+        };
+
+        // Test if the move is valid using a copy of the chess game
+        const testChess = new Chess(chess.fen());
+
+        try {
+          const testMove = testChess.move(move);
+
+          if (testMove) {
+            // Valid move - highlight green
+            squareElement.classList.add("square-hover-legal");
+          } else {
+            // Invalid move - highlight red
+            squareElement.classList.add("square-hover-illegal");
+          }
+        } catch (error) {
+          // Invalid move - highlight red
+          squareElement.classList.add("square-hover-illegal");
+        }
+
+        // const from = `${String.fromCharCode(97 + sourceSquare.col)}${
+        //   8 - sourceSquare.row
+        // }`;
+        // const to = `${String.fromCharCode(97 + targetSquare.col)}${
+        //   8 - targetSquare.row
+        // }`;
+
+        // const testChess = new Chess(chess.fen());
+
+        // try {
+        //   const testMove = testChess.move({
+        //     from: from,
+        //     to: to,
+        //     promotion: "q",
+        //   });
+
+        //   if (testMove) {
+        //     // Valid move - highlight green
+        //     squareElement.classList.add("square-hover-legal");
+        //   } else {
+        //     // Invalid move - highlight red
+        //     squareElement.classList.add("square-hover-illegal");
+        //   }
+        // } catch (error) {
+        //   // Invalid move - highlight red
+        //   squareElement.classList.add("square-hover-illegal");
+        // }
       });
 
       squareElement.addEventListener("drop", (e) => {
@@ -132,6 +195,13 @@ const renderBoard = () => {
     });
   });
 
+  const clearHoverClasses = () => {
+    const squares = document.querySelectorAll(".square");
+    squares.forEach((square) => {
+      square.classList.remove("square-hover-legal", "square-hover-illegal");
+    });
+  };
+
   if (playerRole === "b") {
     boardElement.classList.add("flipped");
   } else {
@@ -141,7 +211,6 @@ const renderBoard = () => {
 
 const renderResult = () => {
   if (chess.game_over()) {
-    console.log("Game Over");
     let message = "";
     if (chess.in_checkmate()) {
       message = `Checkmate! ${chess.turn() === "w" ? "Black" : "white"} wins!`;
@@ -289,11 +358,20 @@ renderBoard();
 
 // Add active timer highlighting
 const highlightActiveTimer = (activeColor) => {
-  whiteTimer.style.borderColor = activeColor === 'w' ? '#10b981' : '#718096';
-  blackTimer.style.borderColor = activeColor === 'b' ? '#10b981' : '#718096';
-  
-  whiteTimer.style.boxShadow = activeColor === 'w' ? 
-    '0 0 10px rgba(16, 185, 129, 0.5)' : '0 4px 8px rgba(0, 0, 0, 0.3)';
-  blackTimer.style.boxShadow = activeColor === 'b' ? 
-    '0 0 10px rgba(16, 185, 129, 0.5)' : '0 4px 8px rgba(0, 0, 0, 0.3)';
+  whiteTimer.style.borderColor = activeColor === "w" ? "#10b981" : "#718096";
+  blackTimer.style.borderColor = activeColor === "b" ? "#10b981" : "#718096";
+
+  whiteTimer.style.boxShadow =
+    activeColor === "w"
+      ? "0 0 10px rgba(16, 185, 129, 0.5)"
+      : "0 4px 8px rgba(0, 0, 0, 0.3)";
+  blackTimer.style.boxShadow =
+    activeColor === "b"
+      ? "0 0 10px rgba(16, 185, 129, 0.5)"
+      : "0 4px 8px rgba(0, 0, 0, 0.3)";
 };
+
+// squareElement.addEventListener("dragleave", function (e) {
+//   // Remove hover classes when leaving a square
+//   squareElement.classList.remove('square-hover-legal', 'square-hover-illegal');
+// }); 

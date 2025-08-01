@@ -3,51 +3,140 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Chess.com</title>
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style>
     body {
-      background-color: #1e1e1e;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
+      background: url('../assets/mandala.png') repeat center;
+      background-size: center fixed;
+      overflow-x: hidden;
+      overflow-y: auto;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
     }
+
+    /* body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 110, 199, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    } */
 
     .chessboard {
       display: grid;
       grid-template-columns: repeat(8, minmax(0, 1fr));
       grid-template-rows: repeat(8, minmax(0, 1fr));
-      width: 400px;
-      height: 400px;
+      width: 600px;
+      height: 600px;
       transform: rotate(0deg);
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #D9B88F;
+
+      /* Main border with glow */
+      border: 4px solid #d4af37;
+      box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 0 40px rgba(212, 175, 55, 0.4),
+        0 0 60px rgba(212, 175, 55, 0.2),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
+
+      /* Spike decorations */
     }
 
-    .piece.white {
-      color: white;
-      filter: drop-shadow(0 0 2px black);
+    .chessboard::before,
+    .chessboard::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
     }
 
-    .flipped {
-      transform: rotate(180deg);
+    /* Corner spikes using pseudo-elements and CSS shapes */
+    .chessboard::before {
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      background:
+        /* Top-left spike */
+        conic-gradient(from 225deg at 0% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
+        /* Top-right spike */
+        conic-gradient(from 315deg at 100% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
+        /* Bottom-left spike */
+        conic-gradient(from 135deg at 0% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg),
+        /* Bottom-right spike */
+        conic-gradient(from 45deg at 100% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg);
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
     }
 
+    /* Additional decorative border */
+    .chessboard::after {
+      top: -12px;
+      left: -12px;
+      right: -12px;
+      bottom: -12px;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      background:
+        /* Corner ornaments */
+        radial-gradient(circle at 0% 0%, #d4af37 2px, transparent 3px),
+        radial-gradient(circle at 100% 0%, #d4af37 2px, transparent 3px),
+        radial-gradient(circle at 0% 100%, #d4af37 2px, transparent 3px),
+        radial-gradient(circle at 100% 100%, #d4af37 2px, transparent 3px),
+        /* Side ornaments */
+        radial-gradient(circle at 50% 0%, #d4af37 1px, transparent 2px),
+        radial-gradient(circle at 50% 100%, #d4af37 1px, transparent 2px),
+        radial-gradient(circle at 0% 50%, #d4af37 1px, transparent 2px),
+        radial-gradient(circle at 100% 50%, #d4af37 1px, transparent 2px);
+    }
+
+    /* Enhanced square styles */
     .square {
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      transition: all 0.3s ease;
     }
 
     .square.light {
-      background-color: #f0d9b5;
+      background: #D9B88F;
     }
 
     .square.dark {
-      background-color: #b58863;
+      background: #A7332B;
     }
 
+    .square:hover {
+      box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Enhanced piece styles */
     .piece {
-      font-size: 33px;
+      font-size: 60px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .piece.white {
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .piece:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
     }
 
     .piece.draggable {
@@ -55,40 +144,113 @@
     }
 
     .dragging {
-      opacity: 0.5;
+      opacity: 0.7;
+      transform: scale(1.2);
+      z-index: 1000;
+    }
+
+    .flipped {
+      transform: rotate(180deg);
     }
 
     .flipped .piece {
       transform: rotate(180deg);
     }
 
-    /* Updated Timer Styles */
+    /* Enhanced Timer Styles */
     .timer1,
     .timer2 {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #2d3748, #4a5568);
-      color: white;
+      position: absolute !important;
+      left: 100%;
+      transform: translateX(-100%);
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #d4af37;
       font-weight: bold;
       font-family: 'Courier New', monospace;
       text-align: center;
-      border-radius: 8px;
-      border: 2px solid #718096;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      border: 3px solid #d4af37;
+      box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(212, 175, 55, 0.1);
       z-index: 1000;
-      min-width: 120px;
-      padding: 8px 16px;
-      font-size: 1.2rem;
+      min-width: 140px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+      
     }
 
+    /* Timer corner spikes */
+    /* .timer1::before,
+    .timer2::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: -6px;
+      bottom: -6px;
+      background:
+        conic-gradient(from 225deg at 0% 0%, transparent 0deg, #d4af37 5deg, transparent 10deg),
+        conic-gradient(from 315deg at 100% 0%, transparent 0deg, #d4af37 5deg, transparent 10deg),
+        conic-gradient(from 135deg at 0% 100%, transparent 0deg, #d4af37 5deg, transparent 10deg),
+        conic-gradient(from 45deg at 100% 100%, transparent 0deg, #d4af37 5deg, transparent 10deg);
+      border-radius: 15px;
+      z-index: -1;
+    } */
+
     .timer1 {
-      top: 20px;
+      top: 0px;
     }
 
     .timer2 {
-      bottom: 20px;
+      bottom: 0px;
     }
+
+    /* Enhanced player info styles */
+    .player-info {
+      transition: all 0.3s ease;
+      background: rgba(26, 26, 46, 0.8);
+      border-radius: 12px;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      padding: 8px 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .player-info:hover {
+      border-color: rgba(212, 175, 55, 0.6);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Enhanced avatar styles */
+    .player-info .square {
+      border: 3px solid #d4af37;
+      box-shadow:
+        0 0 15px rgba(212, 175, 55, 0.5),
+        inset 0 0 10px rgba(212, 175, 55, 0.2);
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
+    }
+
+    .square-hover-legal {
+      background-color: rgba(0, 255, 0, 0.4) !important;
+      box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.6) !important;
+      border: 2px solid rgba(0, 255, 0, 0.8) !important;
+    }
+
+    .square-hover-illegal {
+      background-color: rgba(255, 0, 0, 0.4) !important;
+      box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.6) !important;
+      border: 2px solid rgba(255, 0, 0, 0.8) !important;
+    }
+
+    /* Smooth transitions for hover effects */
+    .square {
+      transition: all 0.2s ease;
+    }
+
+
+
 
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -99,9 +261,9 @@
 
       .timer1,
       .timer2 {
-        font-size: 1rem;
-        min-width: 100px;
-        padding: 6px 12px;
+        font-size: 1.1rem;
+        min-width: 120px;
+        padding: 10px 16px;
       }
 
       .player1,
@@ -122,9 +284,9 @@
 
       .timer1,
       .timer2 {
-        font-size: 0.9rem;
-        min-width: 90px;
-        padding: 5px 10px;
+        font-size: 1rem;
+        min-width: 100px;
+        padding: 8px 12px;
       }
 
       .player1,
@@ -138,82 +300,108 @@
       }
     }
 
-    /* Game container responsive */
+    /* Game container enhancements */
     .game-container {
       min-height: 100vh;
-      padding: 10px;
-    }
-
-    /* Player info responsive */
-    .player-info {
-      transition: all 0.3s ease;
+      padding: 20px;
+      position: relative;
     }
 
     @media (max-height: 600px) {
       .game-container {
-        gap: 16px !important;
+        gap: 12px !important;
+        padding: 10px;
       }
 
       .timer1 {
-        top: 10px;
+        top: 15px;
       }
 
       .timer2 {
-        bottom: 10px;
+        bottom: 15px;
       }
+    }
+
+    /* Enhanced button styles */
+    #copyLinkBtn {
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      box-shadow:
+        0 0 15px rgba(59, 130, 246, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    #copyLinkBtn:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 25px rgba(59, 130, 246, 0.5),
+        0 8px 16px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 
 <body>
-  <div class="game-container w-full h-screen flex items-center justify-center flex-col relative bg-zinc-900 gap-8">
-    <!-- Opponent (Player 1) -->
-    <div class="player1 h-[10vh] w-[400px] relative flex items-center gap-3 player-info">
-      <div class="square h-[3rem] w-[3rem] rounded-full border-2 flex border-green-500 bg-white">
-        <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
+
+  <div class="game-container w-[100vw] h-[100vh] relative overflow-hidden ">
+    <div class="players h-[100vh] flex  flex-col  justify-between absolute left-0 top-0 space-y-[32rem] ">
+
+      <div class="player1 h-[8vh] w-[300px] top-[0%] relative flex items-center gap-2 player-info">
+        <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
+          <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
+        </div>
+        <div class="text-white flex-1">
+          <p class="font-bold text-md" id="opponentName">Waiting for opponent...</p>
+          <p class="text-sm text-gray-400" id="opponentRole">-</p>
+        </div>
+        <div class="text-right text-white">
+          <p class="text-sm text-gray-400">Opponent</p>
+        </div>
       </div>
-      <div class="text-white flex-1">
-        <p class="font-bold text-lg" id="opponentName">Waiting for opponent...</p>
-        <p class="text-sm text-gray-400" id="opponentRole">-</p>
-      </div>
-      <div class="text-right text-white">
-        <p class="text-sm text-gray-400">Opponent</p>
+
+      <div class="player2 h-[8vh] w-[300px] relative flex items-center gap-2 player-info">
+        <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
+          <% if (user) { %>
+            <div class="h-full w-full flex items-center justify-center font-bold text-black">
+              <%= user.firstName.charAt(0).toUpperCase() %>
+            </div>
+            <% } else { %>
+              <div class="h-full w-full flex items-center justify-center font-bold text-black">G</div>
+              <% } %>
+        </div>
+
+        <div class="text-white flex-1">
+          <% if (user) { %>
+            <p class="font-bold text-md">
+              <%= user.firstName %>
+                <%= user.lastName || '' %>
+            </p>
+            <p class="text-sm text-gray-400" id="userRole">-</p>
+            <% } else { %>
+              <p class="font-bold text-lg">Guest Player</p>
+              <p class="text-sm text-gray-400" id="userRole">-</p>
+              <% } %>
+        </div>
+
+        <div class="text-right text-white">
+          <p class="text-sm text-gray-400">You</p>
+        </div>
       </div>
     </div>
 
-    <!-- Chess Board -->
-    <div class="chessboard bg-red-800 relative"></div>
 
-    <!-- Current Player (Player 2) -->
-    <div class="player2 h-[10vh] w-[400px] relative flex items-center gap-3 player-info">
-      <div class="square h-[3rem] w-[3rem] rounded-full border-2 flex border-green-500 bg-white">
-        <% if (user) { %>
-          <div class="h-full w-full flex items-center justify-center font-bold text-black">
-            <%= user.firstName.charAt(0).toUpperCase() %>
-          </div>
-        <% } else { %>
-          <div class="h-full w-full flex items-center justify-center font-bold text-black">G</div>
-        <% } %>
-      </div>
-      
-      <div class="text-white flex-1">
-        <% if (user) { %>
-          <p class="font-bold text-lg">
-            <%= user.firstName %> <%= user.lastName || '' %>
-          </p>
-          <p class="text-sm text-gray-400" id="userRole">-</p>
-        <% } else { %>
-          <p class="font-bold text-lg">Guest Player</p>
-          <p class="text-sm text-gray-400" id="userRole">-</p>
-        <% } %>
-      </div>
-      
-      <div class="text-right text-white">
-        <p class="text-sm text-gray-400">You</p>
-      </div>
+    <div class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <!-- Opponent (Player 1) -->
+
+      <!-- Chess Board -->
+      <div class="chessboard bg-red-800 "></div>
+
+      <!-- Current Player (Player 2) -->
+
+
+      <!-- Copy Link Button -->
+
     </div>
-
-    <!-- Copy Link Button -->
     <button id="copyLinkBtn"
       class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200 z-50">
       Share Game Link
