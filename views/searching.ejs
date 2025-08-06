@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .loader {
+        background: url('../assets/mandala.png') repeat center;
+        height: 100vh;
+        width: 100vw;
+        background-size: cover;
+    }
+
+    .opponent-searching {
+        background: url('../assets/nameplate.png') center no-repeat ;
+        background-size: contain;
+        height: 176px;
+        width: 480px;
+        padding: 40px 96px 0 0  ;
+    }
+
+    .user-avatar {
+        background: url('../assets/flip_nameplate.png') center no-repeat ;
+        background-size: contain;
+        height: 176px;
+        width: 480px;
+        padding: 0 176px 40px 0  ;
+    }
+
+    /* Mobile/Small Tablet Responsive (360px - 768px) */
+    @media (min-width: 360px) and (max-width: 768px) {
+        .opponent-searching {
+            height: 140px;
+            width: 350px;
+            padding: 30px 70px 0 0;
+        }
+
+        .user-avatar {
+            height: 140px;
+            width: 350px;
+            padding: 0 130px 30px 0;
+        }
+
+        .opponent-avatar, .user-avatar-box {
+            height: 60px !important;
+            width: 60px !important;
+        }
+
+        .opponent-name, .user-name {
+            font-size: 28px !important;
+        }
+
+        .opponent-role, .user-role {
+            font-size: 16px !important;
+        }
+
+        .vs-text {
+            font-size: 60px !important;
+        }
+
+        .main-container {
+            padding: 20px;
+            gap: 60px;
+        }
+    }
+
+    /* Extra Small Mobile (360px - 480px) */
+    @media (min-width: 360px) and (max-width: 480px) {
+        .opponent-searching {
+            height: 120px;
+            width: 320px;
+            padding: 25px 60px 0 0;
+        }
+
+        .user-avatar {
+            height: 120px;
+            width: 320px;
+            padding: 0 110px 25px 0;
+        }
+
+        .opponent-avatar, .user-avatar-box {
+            height: 50px !important;
+            width: 50px !important;
+        }
+
+        .opponent-name, .user-name {
+            font-size: 24px !important;
+        }
+
+        .opponent-role, .user-role {
+            font-size: 14px !important;
+        }
+
+        .vs-text {
+            font-size: 48px !important;
+        }
+
+        .main-container {
+            padding: 15px;
+            gap: 40px;
+        }
+    }
+
+    /* Landscape mode for small screens */
+    @media (min-width: 360px) and (max-height: 740px) and (orientation: landscape) {
+        .opponent-searching {
+            height: 100px;
+            width: 280px;
+            padding: 20px 50px 0 0;
+        }
+
+        .user-avatar {
+            height: 100px;
+            width: 280px;
+            padding: 0 90px 20px 0;
+        }
+
+        .opponent-avatar, .user-avatar-box {
+            height: 45px !important;
+            width: 45px !important;
+        }
+
+        .opponent-name, .user-name {
+            font-size: 20px !important;
+        }
+
+        .vs-text {
+            font-size: 40px !important;
+        }
+
+        .main-container {
+            gap: 30px;
+        }
+    }
+</style>
+
+<body>
+    <div class="loader">
+        <div class="main-container flex flex-col items-center justify-center h-full space-y-20">
+            <div class="opponent-searching flex items-center justify-center space-x-8">
+                <div class="opponent-avatar bg-cover bg-center relative border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+                </div>
+                <div class="flex flex-col items-start">
+                    <div class="opponent-name text-4xl text-white font-bold font-family">Searching...</div>
+                    <div class="opponent-role flex-col text-white">Any</div>
+                </div>
+            </div>
+            
+            <span class="vs-text text-7xl font-bold text-white">VS</span>
+            
+            <div class="user-avatar flex items-center justify-center space-x-20">
+                <% if (user) { %>
+                    <div class="user-avatar-box border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <div class="user-name text-4xl text-white font-bold font-family">
+                            <%= user.firstName %>
+                        </div>
+                        <div class="user-role flex-col text-white">
+                            <%= user.role || 'Player' %>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+                    </div>
+                    <div class="flex flex-col items-start">
+                        <div class="user-name text-4xl text-white font-bold font-family">Guest</div>
+                        <div class="user-role flex-col text-white">Player</div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

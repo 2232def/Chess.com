@@ -59,6 +59,27 @@ app.get("/", async function (req, res) {
   res.render("homepage", { user });
 });
 
+app.get("/searching", async function (req, res) {
+  const { userId } = getAuth(req);
+  const roomId = req.params.roomId;
+  const color = req.query.color;
+  let user = null;
+
+  if (userId) {
+    try {
+      user = await clerkClient.users.getUser(userId);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }
+
+  res.render("searching", {
+    user: user,
+    roomId: roomId,
+    assignedColor: color || null,
+  });
+});
+
 app.get(
   "/play",
   requireAuth({ signInUrl: "/sign-in" }),
