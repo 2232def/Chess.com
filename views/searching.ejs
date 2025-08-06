@@ -24,17 +24,17 @@
     .opponent-searching {
         background: url('../assets/nameplate.png') center no-repeat ;
         background-size: contain;
-        height: 176px;
-        width: 480px;
-        padding: 40px 96px 0 0  ;
+        height: 220px;
+        width: 313px;
+        padding: 50px 120px 0 0  ;
     }
 
     .user-avatar {
         background: url('../assets/flip_nameplate.png') center no-repeat ;
         background-size: contain;
-        height: 176px;
-        width: 480px;
-        padding: 0 176px 40px 0  ;
+        height: 220px;
+        width: 313px;
+        padding: 0 220px 50px 0;
     }
 
     /* Mobile/Small Tablet Responsive (360px - 768px) */
@@ -122,7 +122,7 @@
         .user-avatar {
             height: 100px;
             width: 280px;
-            padding: 0 90px 20px 0;
+            padding: 0 50px 20px 0;
         }
 
         .opponent-avatar, .user-avatar-box {
@@ -147,35 +147,35 @@
 <body>
     <div class="loader">
         <div class="main-container flex flex-col items-center justify-center h-full space-y-20">
-            <div class="opponent-searching flex items-center justify-center space-x-8">
-                <div class="opponent-avatar bg-cover bg-center relative border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+            <div class="opponent-searching flex items-center justify-content  space-x-8">
+                <div class="opponent-avatar bg-cover bg-center ml-[30px] relative border-blue-500 border-4 rounded-full h-[100px] w-[100px]">
                 </div>
                 <div class="flex flex-col items-start">
-                    <div class="opponent-name text-4xl text-white font-bold font-family">Searching...</div>
-                    <div class="opponent-role flex-col text-white">Any</div>
+                    <div class="opponent-name text-5xl text-white font-bold font-family">Searching...</div>
+                    <div class="opponent-role text-lg text-white">Any</div>
                 </div>
             </div>
             
-            <span class="vs-text text-7xl font-bold text-white">VS</span>
+            <span class="vs-text text-8xl font-bold text-white">VS</span>
             
-            <div class="user-avatar flex items-center justify-center space-x-20">
+            <div class="user-avatar flex items-center justify-content space-x-8">
                 <% if (user) { %>
-                    <div class="user-avatar-box border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+                    <div class="user-avatar-box border-blue-500 ml-[30px] border-4 rounded-full h-[100px] w-[100px]">
                     </div>
                     <div class="flex flex-col items-start">
-                        <div class="user-name text-4xl text-white font-bold font-family">
+                        <div class="user-name text-5xl text-white font-bold font-family">
                             <%= user.firstName %>
                         </div>
-                        <div class="user-role flex-col text-white">
+                        <div class="user-role text-lg text-white">
                             <%= user.role || 'Player' %>
                         </div>
                     </div>
                 <% } else { %>
-                    <div class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[80px] w-[80px]">
+                    <div class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[100px] w-[100px]">
                     </div>
                     <div class="flex flex-col items-start">
-                        <div class="user-name text-4xl text-white font-bold font-family">Guest</div>
-                        <div class="user-role flex-col text-white">Player</div>
+                        <div class="user-name text-5xl text-white font-bold font-family">Guest</div>
+                        <div class="user-role text-lg text-white">Player</div>
                     </div>
                 <% } %>
             </div>
