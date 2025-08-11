@@ -22,15 +22,15 @@
     }
 
     .opponent-searching {
-        background: url('../assets/nameplate.png') center no-repeat ;
+        background: url('../assets/nameplate.png') center no-repeat;
         background-size: contain;
         height: 220px;
         width: 313px;
-        padding: 50px 120px 0 0  ;
+        padding: 50px 120px 0 0;
     }
 
     .user-avatar {
-        background: url('../assets/flip_nameplate.png') center no-repeat ;
+        background: url('../assets/flip_nameplate.png') center no-repeat;
         background-size: contain;
         height: 220px;
         width: 313px;
@@ -51,16 +51,19 @@
             padding: 0 130px 30px 0;
         }
 
-        .opponent-avatar, .user-avatar-box {
+        .opponent-avatar,
+        .user-avatar-box {
             height: 60px !important;
             width: 60px !important;
         }
 
-        .opponent-name, .user-name {
+        .opponent-name,
+        .user-name {
             font-size: 28px !important;
         }
 
-        .opponent-role, .user-role {
+        .opponent-role,
+        .user-role {
             font-size: 16px !important;
         }
 
@@ -88,16 +91,19 @@
             padding: 0 110px 25px 0;
         }
 
-        .opponent-avatar, .user-avatar-box {
+        .opponent-avatar,
+        .user-avatar-box {
             height: 50px !important;
             width: 50px !important;
         }
 
-        .opponent-name, .user-name {
+        .opponent-name,
+        .user-name {
             font-size: 24px !important;
         }
 
-        .opponent-role, .user-role {
+        .opponent-role,
+        .user-role {
             font-size: 14px !important;
         }
 
@@ -125,12 +131,14 @@
             padding: 0 50px 20px 0;
         }
 
-        .opponent-avatar, .user-avatar-box {
+        .opponent-avatar,
+        .user-avatar-box {
             height: 45px !important;
             width: 45px !important;
         }
 
-        .opponent-name, .user-name {
+        .opponent-name,
+        .user-name {
             font-size: 20px !important;
         }
 
@@ -148,16 +156,18 @@
     <div class="loader">
         <div class="main-container flex flex-col items-center justify-center h-full space-y-20">
             <div class="opponent-searching flex items-center justify-content  space-x-8">
-                <div class="opponent-avatar bg-cover bg-center ml-[30px] relative border-blue-500 border-4 rounded-full h-[100px] w-[100px]">
+                <div
+                    class="opponent-avatar bg-cover bg-center ml-[30px] relative border-blue-500 border-4 rounded-full h-[100px] w-[100px]">
                 </div>
                 <div class="flex flex-col items-start">
-                    <div class="opponent-name text-5xl text-white font-bold font-family">Searching...</div>
-                    <div class="opponent-role text-lg text-white">Any</div>
+                    <div class="opponent-name text-5xl text-white font-bold font-family" id="opponentName">Searching...
+                    </div>
+                    <div class="opponent-role text-lg text-white" id="opponentRole">Any</div>
                 </div>
             </div>
-            
+
             <span class="vs-text text-8xl font-bold text-white">VS</span>
-            
+
             <div class="user-avatar flex items-center justify-content space-x-8">
                 <% if (user) { %>
                     <div class="user-avatar-box border-blue-500 ml-[30px] border-4 rounded-full h-[100px] w-[100px]">
@@ -170,17 +180,114 @@
                             <%= user.role || 'Player' %>
                         </div>
                     </div>
-                <% } else { %>
-                    <div class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[100px] w-[100px]">
-                    </div>
-                    <div class="flex flex-col items-start">
-                        <div class="user-name text-5xl text-white font-bold font-family">Guest</div>
-                        <div class="user-role text-lg text-white">Player</div>
-                    </div>
-                <% } %>
+                    <% } else { %>
+                        <div
+                            class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[100px] w-[100px]">
+                        </div>
+                        <div class="flex flex-col items-start">
+                            <div class="user-name text-5xl text-white font-bold font-family">Guest</div>
+                            <div class="user-role text-lg text-white">Player</div>
+                        </div>
+                        <% } %>
             </div>
         </div>
     </div>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+        integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+        crossorigin="anonymous"></script>
+    <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
+        src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
+    <!-- <script src="/js/userbutton.js"></script> -->
+    <script src="/js/chessgame.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const socket = io();
+            let isInQueue = false;
+
+            // Add connection logging
+            socket.on('connect', () => {
+                console.log('Socket connected:', socket.id);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('Socket disconnected');
+            });
+
+            // Better Clerk handling with error checking
+            if (window.Clerk) {
+                window.Clerk.load().then(() => {
+                    console.log('Clerk loaded');
+                    if (window.Clerk.user) {
+                        const user = window.Clerk.user;
+                        const userData = {
+                            userId: user.id,
+                            userName: `${user.firstName || ''} ${user.lastName || ''}`.trim() || 'Anonymous',
+                            email: user.emailAddresses?.[0]?.emailAddress || 'No email'
+                        };
+
+                        console.log('Sending userData:', userData);
+                        socket.emit('joinMatchmaking', userData);
+                        isInQueue = true;
+                    } else {
+                        console.log('No user found, redirecting to sign-in');
+                        window.location.href = '/sign-in';
+                    }
+                }).catch(error => {
+                    console.error('Clerk loading error:', error);
+                    // Fallback: try with server-side user data
+                    startMatchmakingWithServerData();
+                });
+            } else {
+                console.log('Clerk not available, using server data');
+                startMatchmakingWithServerData();
+            }
+
+            // Fallback function using server-side user data
+            function startMatchmakingWithServerData() {
+                <% if (user) { %>
+                    const userData = {
+                        userId: '<%= user.id %>',
+                        userName: '<%= user.firstName %> <%= user.lastName || "" %>'.trim(),
+                        email: '<%= user.emailAddresses && user.emailAddresses[0] ? user.emailAddresses[0].emailAddress : "No email" %>'
+                    };
+                    console.log('Using server userData:', userData);
+                    socket.emit('joinMatchmaking', userData);
+                    isInQueue = true;
+                <% } else { %>
+                    console.log('No user data available, redirecting');
+                    window.location.href = '/sign-in';
+                <% } %>
+            }
+
+            // Socket event handlers
+            // socket.on('waitingForMatch', function (data) {
+            //     console.log('Waiting for match:', data.message);
+            //     // Update searching status if needed
+            // });
+
+            socket.on('matchFound', function (data) {
+                console.log('Match found!', data);
+
+
+                // Redirect to the game room
+                setTimeout(() => {
+                    console.log('Redirecting to:', `/play/${data.roomId}?color=${data.color}`);
+                    window.location.href = `/play/${data.roomId}?color=${data.color}`;
+                }, 3500);
+            });
+
+            socket.on('matchmakingError', function (message) {
+                console.error('Matchmaking error:', message);
+                alert('Matchmaking error: ' + message);
+            });
+
+            // Add debugging for all socket events
+            socket.onAny((eventName, ...args) => {
+                console.log('Socket event received:', eventName, args);
+            });
+        });
+    </script>
+
 </body>
 
 </html>
