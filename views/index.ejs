@@ -8,8 +8,7 @@
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style>
     body {
-      background: url('../assets/mandala.png') repeat center;
-      background-size: center fixed;
+      background: url('../assets/mandala.png') center center / cover repeat;
       overflow-x: hidden;
       overflow-y: auto;
       font-family: 'Arial', sans-serif;
@@ -160,9 +159,10 @@
     /* Enhanced Timer Styles */
     .timer1,
     .timer2 {
-      position: absolute !important;
-      left: 100%;
-      transform: translateX(-100%);
+      position: fixed !important;
+      right: 16px;
+      left: auto;
+      transform: none;
       background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
       color: #d4af37;
       font-weight: bold;
@@ -200,13 +200,8 @@
       z-index: -1;
     } */
 
-    .timer1 {
-      top: 0px;
-    }
-
-    .timer2 {
-      bottom: 0px;
-    }
+  .timer1 { top: 16px; }
+  .timer2 { bottom: 16px; }
 
     /* Enhanced player info styles */
     .player-info {
@@ -416,17 +411,11 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- <script src="ejs.js"></script> -->
 
+  <script id="server-user" type="application/json"><%- JSON.stringify(typeof user !== 'undefined' ? user : null) %></script>
+
   <script>
-      <% if (typeof user !== 'undefined' && user) { %>
-      window.currentUser = {
-        id: '<%= user.id %>',
-          firstName: '<%= user.firstName %>',
-            lastName: '<%= user.lastName || "" %>',
-              email: '<%= user.emailAddresses[0]?.emailAddress %>'
-      };
-  <% } else { %>
-      window.currentUser = null;
-  <% } %>
+      const userEl = document.getElementById('server-user');
+      window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
 
     // const urlParts = window.location.pathname.split('/');
     // const roomId = urlParts.length > 2 ? urlParts[2] : null;
@@ -434,13 +423,13 @@
     const roomId = '<%= roomId%>';
     const assignedColor = '<%= assignedColor %>';
 
-    window.socket = io({
+  window.socket = io({
       query: {
         roomId: roomId,
-        userId: window.currentUser?.id || '',
-        userName: window.currentUser ?
+  userId: (window.currentUser && window.currentUser.id) ? window.currentUser.id : '',
+    userName: window.currentUser ?
           (window.currentUser.firstName + ' ' + (window.currentUser.lastName || '')).trim() : 'Guest',
-        email: window.currentUser.email,
+    email: (window.currentUser && window.currentUser.email) ? window.currentUser.email : '',
         preferredColor: assignedColor || ""
       }
 

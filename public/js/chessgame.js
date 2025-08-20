@@ -79,7 +79,7 @@ const renderBoard = () => {
       const squareElement = document.createElement("div");
       squareElement.classList.add(
         "square",
-        (rowindex + squareindex) % 2 === 0 ? "Light" : "dark"
+        (rowindex + squareindex) % 2 === 0 ? "light" : "dark"
       );
 
       squareElement.dataset.row = rowindex;
@@ -190,8 +190,7 @@ const renderBoard = () => {
           handleMove(sourceSquare, targetSource);
         }
       });
-      boardElement.appendChild(squareElement);
-      squareElement.blur();
+  boardElement.appendChild(squareElement);
     });
   });
 
@@ -275,7 +274,7 @@ const getPieceUnicode = (piece) => {
     n: "♘",
     b: "♗",
     q: "♕",
-    k: "♔",
+    k: "♚",
     P: "♟",
     R: "♜",
     N: "♞",

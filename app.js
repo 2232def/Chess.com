@@ -80,6 +80,31 @@ app.get("/searching", async function (req, res) {
   });
 });
 
+app.get("/play/computer", requireAuth({signInUrl: "/sign-in"}), async function (req, res){
+  const {userId} = getAuth(req);
+  const difficulty = req.query.difficulty || "medium";
+  let user = null;
+
+  if(userId) {
+    try{
+      user = await clerkClient.users.getUser(userId);
+    } catch(error) {
+      console.log("Error fetching user:", error);
+    }
+  }
+
+  const roomId = `computer_${userId}_${Date.now()}`;
+
+
+  res.render("index" , {
+    user: user,
+    roomId:  roomId,
+    assignedColor: "white",
+    isComputerGame:  true,
+    difficulty: difficulty
+  });
+}); 
+
 app.get(
   "/play",
   requireAuth({ signInUrl: "/sign-in" }),
