@@ -5,6 +5,7 @@ let whiteTimer = document.createElement("div");
 whiteTimer.classList.add("timer1");
 let blackTimer = document.createElement("div");
 blackTimer.classList.add("timer2");
+const stockfish = require("stockfish");
 
 // Initialize timer content
 whiteTimer.innerHTML = "White: 5:00";
