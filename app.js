@@ -98,7 +98,7 @@ app.get(
 
     const roomId = `computer_${userId}_${Date.now()}`;
 
-    res.render("index", {
+    res.render("index1", {
       user: user,
       roomId: roomId,
       assignedColor: "white",

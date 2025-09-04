@@ -113,3 +113,12 @@ function setComputerLevel(level) {
         console.warn("Invalid level. Please set a level between 1 and 5.");
     }
 }
+
+window.stockfishService = {
+    getBestMove,
+    setComputerColor,
+    setComputerLevel,
+    getComputerConfiguration,
+    updateComputerConfiguration,
+    getComputerConfiguration,
+}

@@ -399,6 +399,7 @@
     </div>
   </div>
 
+
   <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
     integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
     crossorigin="anonymous"></script>
@@ -409,6 +410,7 @@
 
   <script id="server-user" type="application/json"><%- JSON.stringify(typeof user !== 'undefined' ? user : null) %></script>
 
+ 
   <script>
       const userEl = document.getElementById('server-user');
       window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
@@ -433,10 +435,10 @@
 
   </script>
 
-  <script src="/js/chessgame.js"></script>
 
-  
+   <script src="/js/chessgame.js"></script>
   <script src="/js/timer.js"></script>
+  <script src="/js/computer-mode.js"></script>
   <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
   <script src="/js/userbutton.js"></script>

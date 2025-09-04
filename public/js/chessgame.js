@@ -5,7 +5,7 @@ let whiteTimer = document.createElement("div");
 whiteTimer.classList.add("timer1");
 let blackTimer = document.createElement("div");
 blackTimer.classList.add("timer2");
-const stockfish = require("stockfish");
+// const stockfish = require("stockfish");
 
 // Initialize timer content
 whiteTimer.innerHTML = "White: 5:00";
@@ -35,7 +35,6 @@ socket.on("forceColor", function (color) {
 });
 
 socket.on("playerJoined", function (data) {
-
   const isOpponent =
     (playerRole === "w" && data.color === "black") ||
     (playerRole === "b" && data.color === "white");
@@ -63,7 +62,6 @@ socket.on("playerJoined", function (data) {
         : "?";
       opponentAvatar.innerHTML = `<div class="h-full w-full flex items-center justify-center font-bold text-black">${firstLetter}</div>`;
     }
-
   }
 
   if (data.userId === socket.io.opts.query.userId) {
@@ -132,7 +130,6 @@ const renderBoard = () => {
           }`,
           promotion: "q",
         };
-
         // Test if the move is valid using a copy of the chess game
         const testChess = new Chess(chess.fen());
 
@@ -191,7 +188,7 @@ const renderBoard = () => {
           handleMove(sourceSquare, targetSource);
         }
       });
-  boardElement.appendChild(squareElement);
+      boardElement.appendChild(squareElement);
     });
   });
 
@@ -229,6 +226,18 @@ const renderResult = () => {
     displayGameMessage(message);
   }
 };
+
+function publishBoardUpdate(){
+  const fen = chess.fen();
+  // const turnChar = fen.split(" ")[1];
+  console.log("FEN:",fen);
+  console.log("FEN:",turnChar);
+  document.dispatchEvent(new CustomEvent('board:fen', {detail: {fen}}));
+}
+
+window.chesss = chess;
+window.renderBoard = renderBoard;
+window.publishBoardUpdate = publishBoardUpdate;
 
 socket.on("inCheck", function (color) {
   if (color === playerRole) {
@@ -304,6 +313,7 @@ socket.on("spectatorRole", function () {
 socket.on("boardState", function (fen) {
   chess.load(fen);
   renderBoard();
+  publishBoardUpdate();
 });
 
 socket.on("move", function (move) {
@@ -355,6 +365,7 @@ socket.on("gameOver", function (message) {
 });
 
 renderBoard();
+publishBoardUpdate();
 
 // Add active timer highlighting
 const highlightActiveTimer = (activeColor) => {
@@ -374,4 +385,4 @@ const highlightActiveTimer = (activeColor) => {
 // squareElement.addEventListener("dragleave", function (e) {
 //   // Remove hover classes when leaving a square
 //   squareElement.classList.remove('square-hover-legal', 'square-hover-illegal');
-// }); 
+// });
