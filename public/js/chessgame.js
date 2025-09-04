@@ -231,11 +231,12 @@ function publishBoardUpdate(){
   const fen = chess.fen();
   // const turnChar = fen.split(" ")[1];
   console.log("FEN:",fen);
-  console.log("FEN:",turnChar);
+  // console.log("FEN:",turnChar);
   document.dispatchEvent(new CustomEvent('board:fen', {detail: {fen}}));
 }
 
 window.chesss = chess;
+
 window.renderBoard = renderBoard;
 window.publishBoardUpdate = publishBoardUpdate;
 

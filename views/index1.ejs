@@ -179,7 +179,7 @@
       padding: 12px 20px;
       font-size: 1rem;
       text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-      
+
     }
 
     /* Timer corner spikes */
@@ -200,8 +200,13 @@
       z-index: -1;
     } */
 
-  .timer1 { top: 16px; }
-  .timer2 { bottom: 16px; }
+    .timer1 {
+      top: 16px;
+    }
+
+    .timer2 {
+      bottom: 16px;
+    }
 
     /* Enhanced player info styles */
     .player-info {
@@ -408,12 +413,13 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- <script src="ejs.js"></script> -->
 
-  <script id="server-user" type="application/json"><%- JSON.stringify(typeof user !== 'undefined' ? user : null) %></script>
+  <script id="server-user"
+    type="application/json"><%- JSON.stringify(typeof user !== 'undefined' ? user : null) %></script>
 
- 
+
   <script>
-      const userEl = document.getElementById('server-user');
-      window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
+    const userEl = document.getElementById('server-user');
+    window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
 
     // const urlParts = window.location.pathname.split('/');
     // const roomId = urlParts.length > 2 ? urlParts[2] : null;
@@ -421,13 +427,13 @@
     const roomId = '<%= roomId%>';
     const assignedColor = '<%= assignedColor %>';
 
-  window.socket = io({
+    window.socket = io({
       query: {
         roomId: roomId,
-  userId: (window.currentUser && window.currentUser.id) ? window.currentUser.id : '',
-    userName: window.currentUser ?
+        userId: (window.currentUser && window.currentUser.id) ? window.currentUser.id : '',
+        userName: window.currentUser ?
           (window.currentUser.firstName + ' ' + (window.currentUser.lastName || '')).trim() : 'Guest',
-    email: (window.currentUser && window.currentUser.email) ? window.currentUser.email : '',
+        email: (window.currentUser && window.currentUser.email) ? window.currentUser.email : '',
         preferredColor: assignedColor || ""
       }
 
@@ -435,10 +441,16 @@
 
   </script>
 
-
-   <script src="/js/chessgame.js"></script>
+  <script src="/js/stockfish-service.js"></script>
+  <script src="/js/chessgame.js"></script>
   <script src="/js/timer.js"></script>
   <script src="/js/computer-mode.js"></script>
+
+  <script>
+    stockfishService.setComputerColor('black');
+    stockfishService.setComputerLevel(3);
+    createComputerMode();
+  </script>
   <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
   <script src="/js/userbutton.js"></script>

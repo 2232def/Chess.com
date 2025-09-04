@@ -1,24 +1,26 @@
-const Svc = window.StockfishService;
+const Svc = window.stockfishService;
 
 let engineBusy = false;
 
 const chessboard = document.getElementById("chessboard");
 
 function isComputersTurn(fen) {
-    const turnChar = fen.split('')[1];
+    const turnChar = fen.split(' ')[1];
     const compChar = (Svc.getComputerConfiguration().color || 'black') === 'white' ? 'w' : 'b';
-    return turnChar = compChar; 
+    return turnChar === compChar; 
 } 
 
-async function computerMove() {
+async function computerMove(fen) {
     if (engineBusy) return;
+    if(!Svc || !window.chesss) return;
     engineBusy = true;
     try{
         const move = await Svc.getBestMove(fen);
+        console.log('Computer move:', move);
         const result = window.chesss.move(move);
         if (result) {
             if (typeof window.renderBoard === 'function') window.renderBoard();
-            if (typeof window.publishBoardUpdate === 'function') window.publishBoardUpdate;
+            if (typeof window.publishBoardUpdate === 'function') window.publishBoardUpdate();
             console.log('[Engine]', result.san, 'FEN:' , window.chesss.fen());
         }
     }
