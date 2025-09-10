@@ -78,11 +78,10 @@ function uciToChessJsMove(uci) {
   }
   const from = m.slice(0, 2);
   const to = m.slice(2, 4);
-  const promo = m[4] ? m[4].toLowerCase() : undefined; // 'q','r','b','n'
+  const promo = m[4] ? m[4].toLowerCase() : undefined; 
   return promo ? { from, to, promotion: promo } : { from, to };
 }
 
-// Promise-based, returns { from, to, promotion? }
 function getBestMove(fen, callback, errorCallback) {
   const url = `${STOCKFISH_API}?${buildQueryParams(fen)}`;
   const p = fetch(url)

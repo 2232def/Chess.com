@@ -70,9 +70,16 @@ socket.on("playerJoined", function (data) {
   }
 });
 
+function getHumanColor() {
+  const compColor =
+    window.stockfishService?.getComputerConfiguration?.().color || "black";
+  return compColor === "black" ? "w" : "b";
+}
+
 const renderBoard = () => {
   const board = chess.board();
   boardElement.innerHTML = "";
+  const humanColor = getHumanColor();
   board.forEach((row, rowindex) => {
     row.forEach((square, squareindex) => {
       const squareElement = document.createElement("div");
@@ -91,7 +98,9 @@ const renderBoard = () => {
           square.color === "w" ? "white" : "black"
         );
         pieceElement.innerText = getPieceUnicode(square);
-        pieceElement.draggable = playerRole === square.color;
+        pieceElement.draggable = window.IS_COMPUTER_MODE
+          ? square.color === humanColor
+          : playerRole === square.color;
 
         pieceElement.addEventListener("dragstart", (e) => {
           if (pieceElement.draggable) {
@@ -227,13 +236,14 @@ const renderResult = () => {
   }
 };
 
-function publishBoardUpdate(){
+function publishBoardUpdate() {
   const fen = chess.fen();
   // const turnChar = fen.split(" ")[1];
-  console.log("FEN:",fen);
+  console.log("FEN:", fen);
   // console.log("FEN:",turnChar);
-  document.dispatchEvent(new CustomEvent('board:fen', {detail: {fen}}));
+  document.dispatchEvent(new CustomEvent("board:fen", { detail: { fen } }));
 }
+
 
 window.chesss = chess;
 
@@ -274,6 +284,19 @@ const handleMove = (source, target) => {
     to: `${String.fromCharCode(97 + target.col)}${8 - target.row}`,
     promotion: "q",
   };
+
+  if (window.IS_COMPUTER_MODE) {
+    const result = chess.move(move);
+    if (result) {
+      renderBoard();
+      if (typeof publishBoardUpdate === "function") publishBoardUpdate();
+      if (typeof highlightActiveTimer === "function")
+        highlightActiveTimer(chess.turn());
+    } else {
+      console.warn("Invalid move attempted:", move);
+    }
+    return;
+  }
 
   socket.emit("move", move);
 };
@@ -318,11 +341,11 @@ socket.on("boardState", function (fen) {
 });
 
 socket.on("move", function (move) {
+  if (window.IS_COMPUTER_MODE) return;
   chess.move(move);
   renderBoard();
   renderResult();
 
-  // Highlight active player's timer
   highlightActiveTimer(chess.turn());
 
   if (!chess.in_check()) {
@@ -332,7 +355,8 @@ socket.on("move", function (move) {
 
 // Timer update and Timer fliped
 socket.on("timerUpdate", function (timers) {
-  if (timerFlipped) {
+  if(window.IS_COMPUTER_MODE) return;
+  if (timerFlipped ) {
     // White player perspective - white timer at bottom
     whiteTimer.className = "timer2"; // Bottom position
     blackTimer.className = "timer1"; // Top position
