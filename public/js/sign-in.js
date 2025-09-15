@@ -4,7 +4,7 @@ window.addEventListener("load", async () => {
   await window.Clerk.load();
 
   window.Clerk.mountSignIn(signInDiv, {
-    redirectUrl: "/play",
+    redirectUrl: "/",
     signInUrl: "/sign-in",
   });
 });

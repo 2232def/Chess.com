@@ -61,7 +61,7 @@ function buildQueryParams(fen) {
   return `fen=${encodeURIComponent(fen)}&depth=${depth}`;
 }
 
-// Extract a valid UCI token from various API formats
+
 function extractUciToken(raw) {
   const s = String(raw || '').trim();
   if (!s) return null;
@@ -70,7 +70,7 @@ function extractUciToken(raw) {
   return tok || null;
 }
 
-// Convert UCI (e.g., "e2e4" or "e7e8q") to chess.js move
+
 function uciToChessJsMove(uci) {
   const m = String(uci || '').trim().toLowerCase();
   if (!/^[a-h][1-8][a-h][1-8][nbrq]?$/i.test(m)) {
