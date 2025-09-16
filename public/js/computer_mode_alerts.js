@@ -21,17 +21,15 @@ function showToast(msg){
     el.textContent = msg;
     el.style.display = "block";
     clearTimeout(el._hideT);
-    el._hideT = setTimeout(() => (el.style.display = "none"), 2000);
 }
 
 function statusFromFen(fen) {
     try {
         const turn  = fen.split(" ")[1];
-        const game = (window.chesss && typeof window.chesss.fen === "function")
-          ? window.chesss.fen()
-          : new window.Chess();
+        const game = new window.Chess();
+        console.log("chess instance" , game);
 
-        if (game !== window.chesss ) game.load(fen);
+        game.load(fen);
 
         if (game.in_checkmate && game.in_checkmate()){
             const winner = turn === "w" ? "Black" : "White";
@@ -63,3 +61,25 @@ function statusFromFen(fen) {
         return {key: "error", text: ""};
     }
 }
+
+function stopLocalTimers(key) {
+    if (!window.LocalTimer) return;
+    if (key === "mate" || key === "stalemate" || key === "material" || key === "threefold" || key === "draw"){
+        window.LocalTimer.stop("w");
+        window.LocalTimer.stop("b");
+    }
+}
+
+document.addEventListener("board:fen" ,  (e) => {
+    const fen = e.detail.fen;
+    if(!fen || !window.chesss) return;
+    const st = statusFromFen(fen);
+    if (st.key !== lastStatus){
+        lastStatus = st.key;
+        if (st.text) showToast(st.text);
+        stopLocalTimers(st.key);
+        if (st.key === "mate" ){
+            window.IS_GAME_OVER = true;
+        }
+    }
+})

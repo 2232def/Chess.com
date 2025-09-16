@@ -298,6 +298,11 @@ const handleMove = (source, target) => {
     return;
   }
 
+  if (window.IS_GAME_OVER) {
+    console.warn("Game is over; no more moves allowed.");
+    return;
+  }
+
   socket.emit("move", move);
 };
 
