@@ -95,7 +95,13 @@
 - Some bugs to solve:
     - Players should not be able to move pieces untill and unless opponent player connects.
 
--Make a system which can play chess automatically (AI opponent).
+- Make a system which can play chess automatically (AI opponent):
     - Integrate a chess AI library (e.g., chess.js, stockfish.js).
     - Implement AI logic to evaluate board positions and make moves.
     - Allow players to play against the AI or spectate AI vs AI matches.
+
+- Chat Feature:
+    - Implement a chat feature using Socket.io.
+    - Allow players and spectators to send messages during the game.
+    - Display chat messages in a chat window on the frontend.
+

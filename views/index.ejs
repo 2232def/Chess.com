@@ -16,20 +16,6 @@
       padding: 0;
     }
 
-    /* body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background:
-        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(255, 110, 199, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-    } */
-
     .chessboard {
       display: grid;
       grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -41,16 +27,12 @@
       border-radius: 8px;
       overflow: hidden;
       background: #D9B88F;
-
-      /* Main border with glow */
       border: 4px solid #d4af37;
       box-shadow:
         0 0 20px rgba(212, 175, 55, 0.6),
         0 0 40px rgba(212, 175, 55, 0.4),
         0 0 60px rgba(212, 175, 55, 0.2),
         inset 0 0 20px rgba(212, 175, 55, 0.1);
-
-      /* Spike decorations */
     }
 
     .chessboard::before,
@@ -60,25 +42,19 @@
       z-index: -1;
     }
 
-    /* Corner spikes using pseudo-elements and CSS shapes */
     .chessboard::before {
       top: -8px;
       left: -8px;
       right: -8px;
       bottom: -8px;
       background:
-        /* Top-left spike */
         conic-gradient(from 225deg at 0% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Top-right spike */
         conic-gradient(from 315deg at 100% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Bottom-left spike */
         conic-gradient(from 135deg at 0% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Bottom-right spike */
         conic-gradient(from 45deg at 100% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg);
       filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
     }
 
-    /* Additional decorative border */
     .chessboard::after {
       top: -12px;
       left: -12px;
@@ -87,19 +63,16 @@
       border: 2px solid rgba(212, 175, 55, 0.3);
       border-radius: 12px;
       background:
-        /* Corner ornaments */
         radial-gradient(circle at 0% 0%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 100% 0%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 0% 100%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 100% 100%, #d4af37 2px, transparent 3px),
-        /* Side ornaments */
         radial-gradient(circle at 50% 0%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 50% 100%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 0% 50%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 100% 50%, #d4af37 1px, transparent 2px);
     }
 
-    /* Enhanced square styles */
     .square {
       display: flex;
       align-items: center;
@@ -120,7 +93,6 @@
       box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
-    /* Enhanced piece styles */
     .piece {
       font-size: 60px;
       cursor: pointer;
@@ -156,7 +128,6 @@
       transform: rotate(180deg);
     }
 
-    /* Enhanced Timer Styles */
     .timer1,
     .timer2 {
       position: fixed !important;
@@ -179,31 +150,11 @@
       padding: 12px 20px;
       font-size: 1rem;
       text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-      
     }
 
-    /* Timer corner spikes */
-    /* .timer1::before,
-    .timer2::before {
-      content: '';
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      right: -6px;
-      bottom: -6px;
-      background:
-        conic-gradient(from 225deg at 0% 0%, transparent 0deg, #d4af37 5deg, transparent 10deg),
-        conic-gradient(from 315deg at 100% 0%, transparent 0deg, #d4af37 5deg, transparent 10deg),
-        conic-gradient(from 135deg at 0% 100%, transparent 0deg, #d4af37 5deg, transparent 10deg),
-        conic-gradient(from 45deg at 100% 100%, transparent 0deg, #d4af37 5deg, transparent 10deg);
-      border-radius: 15px;
-      z-index: -1;
-    } */
+    .timer1 { top: 16px; }
+    .timer2 { bottom: 16px; }
 
-  .timer1 { top: 16px; }
-  .timer2 { bottom: 16px; }
-
-    /* Enhanced player info styles */
     .player-info {
       transition: all 0.3s ease;
       background: rgba(26, 26, 46, 0.8);
@@ -218,7 +169,6 @@
       box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
-    /* Enhanced avatar styles */
     .player-info .square {
       border: 3px solid #d4af37;
       box-shadow:
@@ -239,15 +189,138 @@
       border: 2px solid rgba(255, 0, 0, 0.8) !important;
     }
 
-    /* Smooth transitions for hover effects */
     .square {
       transition: all 0.2s ease;
     }
 
+    .chat-box {
+      background: rgba(26, 26, 46, 0.9);
+      border-radius: 12px;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+      margin-left: 16rem;
+    }
 
+    /* Chat Message Bubbles */
+    .chat-message {
+      display: flex;
+      margin-bottom: 12px;
+      animation: slideIn 0.3s ease-out;
+    }
 
+    .chat-message.sent {
+      justify-content: flex-end;
+    }
 
-    /* Responsive Design */
+    .chat-message.received {
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 70%;
+      padding: 8px 12px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .message-bubble.sent {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message-bubble.received {
+      background: white;
+      color: #1f2937;
+      border-bottom-left-radius: 4px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .message-time {
+      font-size: 10px;
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    .message-bubble.sent .message-time {
+      text-align: right;
+    }
+
+    .message-bubble.received .message-time {
+      text-align: left;
+      color: #6b7280;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: white;
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      width: fit-content;
+      border: 1px solid #e5e7eb;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: #9ca3af;
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-6px);
+      }
+    }
+
+    /* Custom scrollbar for chat */
+    .chat-messages-area::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-messages-area::-webkit-scrollbar-track {
+      background: #f3f4f6;
+    }
+
+    .chat-messages-area::-webkit-scrollbar-thumb {
+      background: #d1d5db;
+      border-radius: 3px;
+    }
+
+    .chat-messages-area::-webkit-scrollbar-thumb:hover {
+      background: #9ca3af;
+    }
+
     @media (max-width: 768px) {
       .chessboard {
         width: 320px;
@@ -268,6 +341,10 @@
 
       .piece {
         font-size: 26px;
+      }
+
+      .top-group {
+        width: 320px !important;
       }
     }
 
@@ -293,9 +370,12 @@
       .piece {
         font-size: 22px;
       }
+
+      .top-group {
+        width: 280px !important;
+      }
     }
 
-    /* Game container enhancements */
     .game-container {
       min-height: 100vh;
       padding: 20px;
@@ -317,7 +397,6 @@
       }
     }
 
-    /* Enhanced button styles */
     #copyLinkBtn {
       background: linear-gradient(135deg, #3b82f6, #1e40af);
       border: 2px solid rgba(212, 175, 55, 0.5);
@@ -337,45 +416,89 @@
 </head>
 
 <body>
-
-  <div class="game-container w-[100vw] h-[100vh] relative overflow-hidden ">
-    <div class="players h-[100vh] flex  flex-col  justify-between absolute left-0 top-0 space-y-[32rem] ">
-
-      <div class="player1 h-[8vh] w-[300px] top-[0%] relative flex items-center gap-2 player-info">
-        <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
-          <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
+  <div class="game-container w-[100vw] h-[100vh] relative overflow-hidden">
+    <div class="players h-[100vh] flex flex-col justify-between absolute left-0 top-0 p-4">
+      
+      <!-- Top group: player1 + chat stuck together -->
+      <div class="top-group flex flex-col">
+        <!-- Opponent (Player 1) -->
+        <div class="player1 h-[8vh] w-[300px] relative flex items-center gap-2 player-info">
+          <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
+            <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
+          </div>
+          <div class="text-white flex-1">
+            <p class="font-bold text-md" id="opponentName">Searching...</p>
+            <p class="text-sm text-gray-400" id="opponentRole">-</p>
+          </div>
+          <div class="text-right text-white">
+            <p class="text-sm text-gray-400">Opponent</p>
+          </div>
         </div>
-        <div class="text-white flex-1">
-          <p class="font-bold text-md" id="opponentName">Waiting for opponent...</p>
-          <p class="text-sm text-gray-400" id="opponentRole">-</p>
+
+        <!-- Chat Box -->
+        <div class="chat-box w-[40px] text-white cursor-pointer ">
+          <p class="text-sm font-bold mb-2">Chat</p>
         </div>
-        <div class="text-right text-white">
-          <p class="text-sm text-gray-400">Opponent</p>
+
+        <div class="chat-ground w-[300px] h-[400px] overflow-hidden bg-white rounded-lg shadow-lg hidden">
+          <!-- Chat Header -->
+          <div class="chat-header bg-gradient-to-r from-blue-500 to-blue-600 p-3 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-blue-600">
+              O
+            </div>
+            <div class="flex-1">
+              <p class="text-white font-semibold text-sm" id="chatOpponentName">Opponent</p>
+              <p class="text-blue-100 text-xs">Online</p>
+            </div>
+          </div>
+
+          <!-- Chat Messages Area -->
+          <div class="chat-messages-area h-[280px] overflow-y-auto p-3 bg-gray-50" id="chatMessagesArea">
+            <!-- Messages will be dynamically added here -->
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="chat-input-area bg-white p-3 border-t border-gray-200 flex gap-2">
+            <input 
+              type="text" 
+              id="chatMessageInput" 
+              placeholder="Type a message..." 
+              class="flex-1 px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:border-blue-500 text-sm"
+            />
+            <button 
+              id="chatSendButton" 
+              class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors duration-200 flex items-center justify-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
+      <!-- Current Player (Player 2) at bottom -->
       <div class="player2 h-[8vh] w-[300px] relative flex items-center gap-2 player-info">
         <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
           <% if (user) { %>
             <div class="h-full w-full flex items-center justify-center font-bold text-black">
               <%= user.firstName.charAt(0).toUpperCase() %>
             </div>
-            <% } else { %>
-              <div class="h-full w-full flex items-center justify-center font-bold text-black">G</div>
-              <% } %>
+          <% } else { %>
+            <div class="h-full w-full flex items-center justify-center font-bold text-black">G</div>
+          <% } %>
         </div>
 
         <div class="text-white flex-1">
           <% if (user) { %>
             <p class="font-bold text-md">
-              <%= user.firstName %>
-                <%= user.lastName || '' %>
+              <%= user.firstName %> <%= user.lastName || '' %>
             </p>
             <p class="text-sm text-gray-400" id="userRole">-</p>
-            <% } else { %>
-              <p class="font-bold text-lg">Guest Player</p>
-              <p class="text-sm text-gray-400" id="userRole">-</p>
-              <% } %>
+          <% } else { %>
+            <p class="font-bold text-lg">Guest Player</p>
+            <p class="text-sm text-gray-400" id="userRole">-</p>
+          <% } %>
         </div>
 
         <div class="text-right text-white">
@@ -384,19 +507,12 @@
       </div>
     </div>
 
-
+    <!-- Chess Board (centered) -->
     <div class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-      <!-- Opponent (Player 1) -->
-
-      <!-- Chess Board -->
-      <div class="chessboard bg-red-800 "></div>
-
-      <!-- Current Player (Player 2) -->
-
-
-      <!-- Copy Link Button -->
-
+      <div class="chessboard bg-red-800"></div>
     </div>
+
+    <!-- Share Link Button -->
     <button id="copyLinkBtn"
       class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200 z-50">
       Share Game Link
@@ -409,31 +525,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"
     integrity="sha512-xRllwz2gdZciIB+AkEbeq+gVhX8VB8XsfqeFbUh+SzHlN96dEduwtTuVuc2u9EROlmW9+yhRlxjif66ORpsgVA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- <script src="ejs.js"></script> -->
 
   <script id="server-user" type="application/json"><%- JSON.stringify(typeof user !== 'undefined' ? user : null) %></script>
-
+  
   <script>
-      const userEl = document.getElementById('server-user');
-      window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
-
-    // const urlParts = window.location.pathname.split('/');
-    // const roomId = urlParts.length > 2 ? urlParts[2] : null;
+    const userEl = document.getElementById('server-user');
+    window.currentUser = userEl ? JSON.parse(userEl.textContent || 'null') : null;
 
     const roomId = '<%= roomId%>';
     const assignedColor = '<%= assignedColor %>';
 
-  window.socket = io({
+    window.socket = io({
       query: {
         roomId: roomId,
-  userId: (window.currentUser && window.currentUser.id) ? window.currentUser.id : '',
-    userName: window.currentUser ?
+        userId: (window.currentUser && window.currentUser.id) ? window.currentUser.id : '',
+        userName: window.currentUser ?
           (window.currentUser.firstName + ' ' + (window.currentUser.lastName || '')).trim() : 'Guest',
-    email: (window.currentUser && window.currentUser.email) ? window.currentUser.email : '',
+        email: (window.currentUser && window.currentUser.email) ? window.currentUser.email : '',
         preferredColor: assignedColor || ""
       }
-
-    })
+    });
 
     document.getElementById('copyLinkBtn').addEventListener('click', function () {
       navigator.clipboard.writeText(window.location.href)
@@ -443,11 +554,12 @@
         .catch(err => {
           console.error('Failed to copy: ', err);
         });
-    })
+    });
   </script>
 
   <script src="/js/chessgame.js"></script>
   <script src="/js/timer.js"></script>
+  <script src="/js/chat-popup.js"></script>
   <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
     src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
   <script src="/js/userbutton.js"></script>
