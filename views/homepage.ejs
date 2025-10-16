@@ -4,142 +4,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>चतुरङ्ग - The Ancient Game of Kings</title>
+    <link rel="stylesheet" href="/css/homepage.css">
 </head>
 
 <body>
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Animated Background Pattern -->
+    <div class="background-pattern"></div>
 
-        .homepage {
-            background-color: rgb(56, 57, 54);
-        }
-       
-        .playbutton {
-            background: url('../assets/playbutton.png') no-repeat center ;
-            background-size: cover;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-    <div
-        class="homepage p-20  h-screen w-[100vw] flex flex-col items-center justify-center space-y-10 overflow-hidden relative">
-        <div class="parent gap-10 flex w-[30vw] h-[20vh] absolute top-3 right-3 ">
-            <div class=" rounded-md" id="app"></div>
+    <!-- Detailed Mandala Decorations -->
+    <svg class="mandala mandala-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer Layer - 12 Large Petals -->
+        <g stroke="#d4af37" fill="none" stroke-width="0.5">
+            <path d="M100,20 Q110,40 100,60 Q90,40 100,20 M100,140 Q110,160 100,180 Q90,160 100,140
+                     M20,100 Q40,110 60,100 Q40,90 20,100 M140,100 Q160,110 180,100 Q160,90 140,100
+                     M35,35 Q50,50 35,65 Q20,50 35,35 M165,35 Q180,50 165,65 Q150,50 165,35
+                     M35,165 Q50,180 35,195 Q20,180 35,165 M165,165 Q180,180 165,195 Q150,180 165,165
+                     M65,30 Q75,45 65,60 Q55,45 65,30 M135,30 Q145,45 135,60 Q125,45 135,30
+                     M30,65 Q45,75 60,65 Q45,55 30,65 M140,65 Q155,75 170,65 Q155,55 140,65" />
+        </g>
+        <!-- Concentric Circles -->
+        <circle cx="100" cy="100" r="70" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="60" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="50" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <!-- Inner Petals - 8 Medium Petals -->
+        <g stroke="#d4af37" fill="none" stroke-width="0.5">
+            <ellipse cx="100" cy="60" rx="8" ry="15" />
+            <ellipse cx="100" cy="140" rx="8" ry="15" />
+            <ellipse cx="60" cy="100" rx="15" ry="8" />
+            <ellipse cx="140" cy="100" rx="15" ry="8" />
+            <ellipse cx="73" cy="73" rx="12" ry="12" transform="rotate(45 73 73)" />
+            <ellipse cx="127" cy="73" rx="12" ry="12" transform="rotate(-45 127 73)" />
+            <ellipse cx="73" cy="127" rx="12" ry="12" transform="rotate(-45 73 127)" />
+            <ellipse cx="127" cy="127" rx="12" ry="12" transform="rotate(45 127 127)" />
+        </g>
+        <!-- Central Flower -->
+        <circle cx="100" cy="100" r="30" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="20" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <g stroke="#d4af37" fill="none" stroke-width="0.5">
+            <circle cx="100" cy="85" r="5" />
+            <circle cx="115" cy="100" r="5" />
+            <circle cx="100" cy="115" r="5" />
+            <circle cx="85" cy="100" r="5" />
+            <circle cx="109" cy="91" r="5" />
+            <circle cx="109" cy="109" r="5" />
+            <circle cx="91" cy="109" r="5" />
+            <circle cx="91" cy="91" r="5" />
+        </g>
+        <circle cx="100" cy="100" r="8" stroke="#d4af37" fill="none" stroke-width="0.8" />
+    </svg>
+
+    <svg class="mandala mandala-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Similar detailed structure -->
+        <g stroke="#d4af37" fill="none" stroke-width="0.5">
+            <path d="M100,10 L105,35 L100,60 L95,35 Z M100,140 L105,165 L100,190 L95,165 Z
+                     M10,100 L35,105 L60,100 L35,95 Z M140,100 L165,105 L190,100 L165,95 Z
+                     M30,30 L45,45 L30,60 L15,45 Z M170,30 L185,45 L170,60 L155,45 Z
+                     M30,170 L45,185 L30,200 L15,185 Z M170,170 L185,185 L170,200 L155,185 Z" />
+        </g>
+        <circle cx="100" cy="100" r="80" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="70" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="55" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="40" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <g stroke="#d4af37" fill="none" stroke-width="0.5">
+            <line x1="100" y1="60" x2="100" y2="140" />
+            <line x1="60" y1="100" x2="140" y2="100" />
+            <line x1="72" y1="72" x2="128" y2="128" />
+            <line x1="128" y1="72" x2="72" y2="128" />
+        </g>
+        <circle cx="100" cy="100" r="25" stroke="#d4af37" fill="none" stroke-width="0.8" />
+        <circle cx="100" cy="100" r="15" stroke="#d4af37" fill="none" stroke-width="0.8" />
+    </svg>
+
+    <svg class="mandala mandala-center" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Most detailed central mandala -->
+        <g stroke="#d4af37" fill="none" stroke-width="0.4">
+            <!-- Outer decorative ring -->
+            <circle cx="100" cy="100" r="95" />
+            <circle cx="100" cy="100" r="90" />
+            <!-- Lotus petals outer -->
+            <path d="M100,5 Q115,25 100,45 Q85,25 100,5 M100,155 Q115,175 100,195 Q85,175 100,155
+                     M5,100 Q25,115 45,100 Q25,85 5,100 M155,100 Q175,115 195,100 Q175,85 155,100
+                     M22,22 Q37,37 22,52 Q7,37 22,22 M178,22 Q193,37 178,52 Q163,37 178,22
+                     M22,178 Q37,193 22,208 Q7,193 22,178 M178,178 Q193,193 178,208 Q163,193 178,178" />
+        </g>
+        <circle cx="100" cy="100" r="75" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="65" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <circle cx="100" cy="100" r="50" stroke="#d4af37" fill="none" stroke-width="0.5" />
+        <g stroke="#d4af37" fill="none" stroke-width="0.6">
+            <polygon points="100,55 110,75 105,95 95,95 90,75" />
+            <polygon points="100,145 110,125 105,105 95,105 90,125" />
+            <polygon points="55,100 75,110 95,105 95,95 75,90" />
+            <polygon points="145,100 125,110 105,105 105,95 125,90" />
+        </g>
+        <circle cx="100" cy="100" r="35" stroke="#d4af37" fill="none" stroke-width="0.7" />
+        <circle cx="100" cy="100" r="20" stroke="#d4af37" fill="none" stroke-width="0.8" />
+        <circle cx="100" cy="100" r="10" stroke="#d4af37" fill="none" stroke-width="1" />
+    </svg>
+
+    <!-- Ornamental Corner Borders -->
+    <div class="corner-ornament corner-top-left"></div>
+    <div class="corner-ornament corner-top-right"></div>
+    <div class="corner-ornament corner-bottom-left"></div>
+    <div class="corner-ornament corner-bottom-right"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- User Button - Top Right -->
+        <div style="position: absolute; top: 20px; right: 20px; z-index: 100;">
+            <div id="app"></div>
             <% if (!user) { %>
                 <button onclick="window.location.href='/sign-in'"
-                    class=" bg-blue-200 rounded-md px-7 py-3 h-[4rem] cursor-pointer hover:scale-105 duration-300 border-blue-500 ">
-                    Sign Up</button>
+                    style="background: linear-gradient(135deg, #d4af37, #8b6914); color: #1a0a00; border: none; padding: 12px 24px; border-radius: 8px; font-family: 'Cinzel', serif; font-weight: 600; cursor: pointer; letter-spacing: 1px; transition: all 0.3s ease;">
+                    Sign In
+                </button>
                 <% } %>
-
-        </div>
-        <h1 class="text-6xl font-bold text-white">CHESS GAME</h1>
-        <div class=" flex flex-wrap lg:space-x-[20vw] space-y-10  items-center justify-center ">
-            <img src="../assets/image.png" class="h-[50vh] w-[50vw] object-cover " alt="">
-            <!-- <button onclick="window.location.href='/play'"
-                class="playbutton rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-green-500"></button> -->
-        </div>
-        <div class="flex space-x-4">
-            <button onclick="window.location.href='/play/computer'"
-                class="bg-green-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-green-500">
-                <span>Play vs Computer</span>
-            </button>
-
-            <button id="findMatchBtn"
-                class="bg-yellow-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-yellow-500">
-                <span>Find a Match</span>
-            </button>
         </div>
 
-        <div id="matchmakingStatus" class="hidden mt-4 p-3 bg-gray-700 text-white rounded-md text-center">
-            <p id="matchmakingMessage">Looking for an opponent...</p>
-            <button id="cancelMatchBtn" class="mt-2 bg-red-500 text-white px-4 py-2 rounded-sm">Cancel</button>
+        <!-- Header Section -->
+        <header class="header-section">
+            <h1 class="main-title">चतुरङ्ग</h1>
+            <p class="subtitle">The Ancient Game of Kings</p>
+            <div class="decorative-divider">✦ ◆ ✦</div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="main-content">
+            <!-- 3D Chess Board -->
+            <div class="board-container">
+                <div class="chess-board">
+                    <div class="board-frame">
+                        <div class="board-grid" id="chessBoard"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="content-section">
+                <p class="description">
+                    Chaturanga, the ancient predecessor of modern chess, originated in India during the Gupta Empire
+                    around the 6th century CE.
+                    This strategic board game represented the four divisions of the Indian military: infantry, cavalry,
+                    elephants, and chariots.
+                    Played by kings and nobles in magnificent palace halls, Chaturanga was more than a game—it was a
+                    test of wisdom, strategy,
+                    and foresight. Experience this timeless tradition where every move carries the weight of centuries
+                    of royal heritage.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="cta-button" id="findMatchBtn">
+                        <span class="button-texture"></span>
+                        Find a Match
+                    </button>
+                    <button class="cta-button" onclick="window.location.href='/play/computer'">
+                        <span class="button-texture"></span>
+                        Play vs Computer
+                    </button>
+                    <button class="cta-button" onclick="window.location.href='/createlink'">
+                        <span class="button-texture"></span>
+                        Create Private Game
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <button onclick="window.location.href='/createlink'"
-            class="bg-blue-300 rounded-md px-10 py-5 cursor-pointer hover:scale-105 duration-300 hover:border-5 border-blue-500">
-            <span>Create Private Game</span>
-        </button>
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="section-title">More Modes</h2>
+            <div style="text-align: center; padding: 60px 20px; font-family: 'Cormorant Garamond', serif;">
+                <div style="font-size: 4em; color: #d4af37; margin-bottom: 20px;">⏳</div>
+                <h3
+                    style="font-size: 2.5em; color: #d4af37; font-family: 'Cinzel', serif; letter-spacing: 3px; margin-bottom: 15px;">
+                    COMING SOON</h3>
+            </div>
+        </section>
     </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
         integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
         crossorigin="anonymous"></script>
     <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
         src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
-
     <script src="/js/userbutton.js"></script>
+
     <script>
+        // Generate Chess Board
+        const board = document.getElementById('chessBoard');
+        const pieces = {
+            'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
+            'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
+        };
+        
+        const startPosition = [
+            ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
+            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', ''],
+            ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+            ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
+        ];
+
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = document.createElement('div');
+                square.className = `square ${(row + col) % 2 === 0 ? 'light' : 'dark'}`;
+                const piece = startPosition[row][col];
+                if (piece) {
+                    square.textContent = pieces[piece];
+                    square.style.color = piece === piece.toUpperCase() ? '#f4e4c1' : '#2a1810';
+                }
+                board.appendChild(square);
+            }
+        }
+
+        // Ripple Effect for Buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+
+            button.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function () {
-            // Elements
+            // Generate chess board
+            generateChessBoard();
+
+            // Add ripple effect to all CTA buttons
+            const buttons = document.querySelectorAll('.cta-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', createRipple);
+            });
+
+            // Find Match Button Handler
             const findMatchBtn = document.getElementById('findMatchBtn');
-            // const cancelMatchBtn = document.getElementById('cancelMatchBtn');
-            // const matchmakingStatus = document.getElementById('matchmakingStatus');
-            // const matchmakingMessage = document.getElementById('matchmakingMessage');
-
-            // // Initialize socket
-            // const socket = io();
-            // let isInQueue = false;
-
-            findMatchBtn.addEventListener('click', async function () {
-                // Only proceed if user is logged in
+            findMatchBtn.addEventListener('click', function (event) {
                 if (!window.Clerk || !window.Clerk.user) {
                     window.location.href = '/sign-in';
                     return;
                 }
-
-                // Get user details from Clerk
-            //     const user = window.Clerk.user;
-            //     const userData = {
-            //         userId: user.id,
-            //         userName: `${user.firstName} ${user.lastName}`.trim(),
-            //         email: user.emailAddresses && user.emailAddresses[0]
-            //             ? user.emailAddresses[0].emailAddress
-            //             : 'No email'
-            //     };
-
-            //     // Join the matchmaking queue
-            //     socket.emit('joinMatchmaking', userData);
-
-            //     // Update UI
-            //     matchmakingStatus.classList.remove('hidden');
-            //     findMatchBtn.classList.add('hidden');
-            //     isInQueue = true;
-            // });
-
-            // cancelMatchBtn.addEventListener('click', function () {
-            //     socket.emit('leaveMatchmaking');
-            //     matchmakingStatus.classList.add('hidden');
-            //     findMatchBtn.classList.remove('hidden');
-            //     isInQueue = false;
-            // });
-
-            // // Socket event handlers
-            // socket.on('waitingForMatch', function (data) {
-            //     matchmakingMessage.textContent = data.message;
-            // });
-
-            // socket.on('matchFound', function (data) {
-            //     matchmakingMessage.textContent = `Match found! Starting game...`;
-
-            //     // Redirect to the game room
-            //     setTimeout(() => {
-            //         window.location.href = `/play/${data.roomId}?color=${data.color}`;
-            //     }, 1500);
-            // });
-
-            // socket.on('matchmakingError', function (message) {
-            //     matchmakingMessage.textContent = `Error: ${message}`;
-            //     setTimeout(() => {
-            //         matchmakingStatus.classList.add('hidden');
-            //         findMatchBtn.classList.remove('hidden');
-            //         isInQueue = false;
-            //     }, 3000);
-            window.location.href = '/searching';
+                window.location.href = '/searching';
             });
         });
     </script>
