@@ -123,7 +123,11 @@
 
         <!-- Header Section -->
         <header class="header-section">
-            <h1 class="main-title">चतुरङ्ग</h1>
+            <h1 class="main-title">
+                <span class="title-word">Chess</span>
+                <span class="title-word active">Chaturanga</span>
+                <span class="title-word">चतुरङ्ग</span>
+            </h1>
             <p class="subtitle">The Ancient Game of Kings</p>
             <div class="decorative-divider">✦ ◆ ✦</div>
         </header>
@@ -197,7 +201,7 @@
             'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
             'R': '♖', 'N': '♘', 'B': '♗', 'Q': '♕', 'K': '♔', 'P': '♙'
         };
-        
+
         const startPosition = [
             ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
             ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
@@ -216,7 +220,7 @@
                 const piece = startPosition[row][col];
                 if (piece) {
                     square.textContent = pieces[piece];
-                    square.style.color = piece === piece.toUpperCase() ? '#f4e4c1' : '#2a1810';
+                    square.style.color = piece === piece.toUpperCase() ? 'white' : 'black';
                 }
                 board.appendChild(square);
             }
@@ -245,9 +249,9 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function () {
             // Generate chess board
-            generateChessBoard();
+            // generateChessBoard();
 
-            // Add ripple effect to all CTA buttons
+            // // Add ripple effect to all CTA buttons
             const buttons = document.querySelectorAll('.cta-button');
             buttons.forEach(button => {
                 button.addEventListener('click', createRipple);
@@ -262,6 +266,16 @@
                 }
                 window.location.href = '/searching';
             });
+
+            // Title Word Animation
+            const titleWords = document.querySelectorAll('.title-word');
+            let currentIndex = 0;
+
+            setInterval(() => {
+                titleWords[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % titleWords.length;
+                titleWords[currentIndex].classList.add('active');
+            }, 3000); // Change every 3 seconds
         });
     </script>
 </body>

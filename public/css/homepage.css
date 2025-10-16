@@ -176,8 +176,25 @@ body {
     0 0 40px rgba(212, 175, 55, 0.5),
     0 0 60px rgba(212, 175, 55, 0.3);
   margin-bottom: 20px;
-  animation: textGlow 3s ease-in-out infinite;
   letter-spacing: 8px;
+  position: relative;
+  height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-word {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: all 1s ease-in-out;
+  animation: textGlow 3s ease-in-out infinite;
+}
+
+.title-word.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 @keyframes textGlow {
@@ -265,7 +282,7 @@ body {
 }
 
 .square.light {
-  background: linear-gradient(135deg, #f4e4c1, #e8d4a8);
+  background: linear-gradient(135deg, #f4dba6, #fffac7fd);
 }
 
 .square.dark {
