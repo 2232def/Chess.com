@@ -104,9 +104,6 @@ Chess.com/
 
 ## 🔧 Configuration
 
-### Chess Engine
-Stockfish settings are configured in `engine/stockfish-node.js`
-
 ### Socket.io
 Real-time communication setup in `app.js` and `public/js/chessgame.js`
 
@@ -121,22 +118,6 @@ Real-time communication setup in `app.js` and `public/js/chessgame.js`
 - Check if CDN is accessible
 - Verify server is running on correct port
 
-**Issue**: Chess pieces not loading
-- Ensure chess.js is loaded before chessgame.js
-- Check browser console for errors
-
-**Issue**: Stockfish not working
-- Verify Stockfish files are in `engine/` folder
-- Check Node.js version compatibility
-
-## 📝 License
-
-This project is open source and available under the MIT License.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ## 👥 Author
 
 **2232def**
@@ -145,3 +126,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ---
 
 **चतुरङ्ग - Where Ancient Tradition Meets Modern Gaming** ♟️
+
+This is inspired from chess.com
