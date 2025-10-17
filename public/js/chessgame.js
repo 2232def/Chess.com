@@ -5,9 +5,7 @@ let whiteTimer = document.createElement("div");
 whiteTimer.classList.add("timer1");
 let blackTimer = document.createElement("div");
 blackTimer.classList.add("timer2");
-// const stockfish = require("stockfish");
 
-// Initialize timer content
 whiteTimer.innerHTML = "White: 5:00";
 blackTimer.innerHTML = "Black: 5:00";
 
@@ -139,21 +137,20 @@ const renderBoard = () => {
           }`,
           promotion: "q",
         };
-        // Test if the move is valid using a copy of the chess game
         const testChess = new Chess(chess.fen());
 
         try {
           const testMove = testChess.move(move);
 
           if (testMove) {
-            // Valid move - highlight green
+
             squareElement.classList.add("square-hover-legal");
           } else {
-            // Invalid move - highlight red
+
             squareElement.classList.add("square-hover-illegal");
           }
         } catch (error) {
-          // Invalid move - highlight red
+
           squareElement.classList.add("square-hover-illegal");
         }
 
@@ -358,17 +355,17 @@ socket.on("move", function (move) {
   }
 });
 
-// Timer update and Timer fliped
+
 socket.on("timerUpdate", function (timers) {
   if(window.IS_COMPUTER_MODE) return;
   if (timerFlipped ) {
-    // White player perspective - white timer at bottom
+
     whiteTimer.className = "timer2"; // Bottom position
     blackTimer.className = "timer1"; // Top position
     whiteTimer.textContent = `White: ${formatTime(timers.w)}`;
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
   } else {
-    // Black player perspective - black timer at bottom
+
     whiteTimer.className = "timer1"; // Top position
     blackTimer.className = "timer2"; // Bottom position
     blackTimer.textContent = `Black: ${formatTime(timers.b)}`;
@@ -397,7 +394,6 @@ socket.on("gameOver", function (message) {
 renderBoard();
 publishBoardUpdate();
 
-// Add active timer highlighting
 const highlightActiveTimer = (activeColor) => {
   whiteTimer.style.borderColor = activeColor === "w" ? "#10b981" : "#718096";
   blackTimer.style.borderColor = activeColor === "b" ? "#10b981" : "#718096";
