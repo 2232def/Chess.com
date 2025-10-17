@@ -27,7 +27,7 @@ function statusFromFen(fen) {
     try {
         const turn  = fen.split(" ")[1];
         const game = new window.Chess();
-        console.log("chess instance" , game);
+        // console.log("chess instance" , game);
 
         game.load(fen);
 

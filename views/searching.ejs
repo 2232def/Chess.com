@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/searching.css">
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<style>
+<!-- <style>
     body {
         margin: 0;
         padding: 0;
@@ -150,73 +151,451 @@
             gap: 30px;
         }
     }
-</style>
+</style> -->
 
 <body>
-    <div class="loader">
-        <div class="main-container flex flex-col items-center justify-center h-full space-y-20">
-            <div class="opponent-searching flex items-center justify-content  space-x-8">
-                <div
-                    class="opponent-avatar bg-cover bg-center ml-[30px] relative border-blue-500 border-4 rounded-full h-[100px] w-[100px]">
+    <div class="bg-pattern"></div>
+
+    <!-- Mandala Decorations -->
+    <svg class="mandala mandala-left" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(500, 500)" fill="none" stroke="#d4af37" stroke-width="3">
+            <!-- Outermost layer -->
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(0)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(45)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(90)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(135)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(180)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(225)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(270)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(315)" />
+
+            <!-- Decorative circles -->
+            <circle cx="0" cy="0" r="420" stroke-width="2" />
+            <circle cx="0" cy="0" r="380" stroke-width="3" />
+            <circle cx="0" cy="0" r="340" stroke-width="2" />
+
+            <!-- Second petal layer -->
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(0)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(45)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(90)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(135)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(180)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(225)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(270)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(315)" />
+
+            <!-- More circles -->
+            <circle cx="0" cy="0" r="280" stroke-width="2" />
+            <circle cx="0" cy="0" r="240" stroke-width="3" />
+            <circle cx="0" cy="0" r="200" stroke-width="2" />
+
+            <!-- Inner petals -->
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(22.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(67.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(112.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(157.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(202.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(247.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(292.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(337.5)" />
+
+            <!-- Center circles -->
+            <circle cx="0" cy="0" r="160" stroke-width="2" />
+            <circle cx="0" cy="0" r="130" stroke-width="3" />
+            <circle cx="0" cy="0" r="100" stroke-width="2" />
+            <circle cx="0" cy="0" r="70" stroke-width="3" />
+            <circle cx="0" cy="0" r="40" stroke-width="2" />
+        </g>
+    </svg>
+
+    <svg class="mandala mandala-right" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(500, 500)" fill="none" stroke="#d4af37" stroke-width="3">
+            <!-- Outermost layer -->
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(0)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(45)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(90)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(135)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(180)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(225)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(270)" />
+            <path
+                d="M0,-450 Q30,-430 40,-410 Q50,-390 55,-370 Q60,-350 55,-330 Q50,-310 40,-290 Q30,-270 0,-250 Q-30,-270 -40,-290 Q-50,-310 -55,-330 Q-60,-350 -55,-370 Q-50,-390 -40,-410 Q-30,-430 0,-450Z"
+                transform="rotate(315)" />
+
+            <!-- Decorative circles -->
+            <circle cx="0" cy="0" r="420" stroke-width="2" />
+            <circle cx="0" cy="0" r="380" stroke-width="3" />
+            <circle cx="0" cy="0" r="340" stroke-width="2" />
+
+            <!-- Second petal layer -->
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(0)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(45)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(90)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(135)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(180)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(225)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(270)" />
+            <path
+                d="M0,-320 Q25,-300 30,-280 Q35,-260 30,-240 Q25,-220 0,-200 Q-25,-220 -30,-240 Q-35,-260 -30,-280 Q-25,-300 0,-320Z"
+                transform="rotate(315)" />
+
+            <!-- More circles -->
+            <circle cx="0" cy="0" r="280" stroke-width="2" />
+            <circle cx="0" cy="0" r="240" stroke-width="3" />
+            <circle cx="0" cy="0" r="200" stroke-width="2" />
+
+            <!-- Inner petals -->
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(22.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(67.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(112.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(157.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(202.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(247.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(292.5)" />
+            <path
+                d="M0,-180 Q20,-165 22,-150 Q24,-135 22,-120 Q20,-105 0,-90 Q-20,-105 -22,-120 Q-24,-135 -22,-150 Q-20,-165 0,-180Z"
+                transform="rotate(337.5)" />
+
+            <!-- Center circles -->
+            <circle cx="0" cy="0" r="160" stroke-width="2" />
+            <circle cx="0" cy="0" r="130" stroke-width="3" />
+            <circle cx="0" cy="0" r="100" stroke-width="2" />
+            <circle cx="0" cy="0" r="70" stroke-width="3" />
+            <circle cx="0" cy="0" r="40" stroke-width="2" />
+        </g>
+    </svg>
+
+    <div class="container">
+
+        <!-- VS Battle Section -->
+        <div class="battle-arena">
+            <!-- Player 1 Card -->
+            <div class="player-card player1">
+                <div class="card-pattern"></div>
+                <div class="avatar">
+                    <svg class="avatar-mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(100, 100)">
+                            <!-- Outer petals -->
+                            <g>
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(0)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(45)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(90)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(135)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(180)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(225)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(270)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(315)" />
+                            </g>
+
+                            <!-- Circles -->
+                            <circle cx="0" cy="0" r="75" fill="none" stroke="#d4af37" stroke-width="1" />
+                            <circle cx="0" cy="0" r="60" fill="none" stroke="#d4af37" stroke-width="1.5" />
+                            <circle cx="0" cy="0" r="45" fill="none" stroke="#d4af37" stroke-width="1" />
+
+                            <!-- Inner petals -->
+                            <g>
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(0)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(45)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(90)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(135)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(180)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(225)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(270)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(315)" />
+                            </g>
+
+                            <!-- Center -->
+                            <circle cx="0" cy="0" r="30" fill="none" stroke="#d4af37" stroke-width="1" />
+                            <circle cx="0" cy="0" r="20" fill="none" stroke="#d4af37" stroke-width="1.5" />
+                        </g>
+                    </svg>
+                    <div class="avatar-center">♔</div>
                 </div>
-                <div class="flex flex-col items-start">
-                    <div class="opponent-name text-5xl text-white font-bold font-family" id="opponentName">Searching...
+
+                <% if (user) {%>
+
+                    <h2 class="player-name opponent-name" id="opponentName">Searching....</h2>
+                    <p class="player-title opponent-role">Any</p>
+                    <div class="player-stats">
+                        <!-- <div class="stat">
+                        <span class="stat-value"><%= user.rating %></span>
+                        <span class="stat-label">Rating</span>
                     </div>
-                    <div class="opponent-role text-lg text-white" id="opponentRole">Any</div>
-                </div>
+                    <div class="stat">
+                        <span class="stat-value"><%= user.wins %></span>
+                        <span class="stat-label">Wins</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value"><%= user.winRate %></span>
+                        <span class="stat-label">Win Rate</span>
+                    </div> -->
+                    </div>
+
+                    <% } %>
             </div>
 
-            <span class="vs-text text-8xl font-bold text-white">VS</span>
+            <!-- VS Divider -->
+            <div class="vs-divider">
+                <div class="sword-top"></div>
+                <div class="vs-circle">
+                    <span class="vs-text">VS</span>
+                </div>
+                <div class="sword-bottom"></div>
+            </div>
 
-            <div class="user-avatar flex items-center justify-content space-x-8">
+            <!-- Player 2 Card -->
+            <div class="player-card player2">
+                <div class="card-pattern"></div>
+                <div class="avatar">
+                    <svg class="avatar-mandala" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <g transform="translate(100, 100)">
+                            <!-- Outer petals -->
+                            <g>
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(0)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(45)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(90)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(135)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(180)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(225)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(270)" />
+                                <path
+                                    d="M 0,-85 Q 8,-75 10,-65 Q 12,-55 10,-45 Q 8,-35 0,-25 Q -8,-35 -10,-45 Q -12,-55 -10,-65 Q -8,-75 0,-85 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(315)" />
+                            </g>
+
+                            <!-- Circles -->
+                            <circle cx="0" cy="0" r="75" fill="none" stroke="#d4af37" stroke-width="1" />
+                            <circle cx="0" cy="0" r="60" fill="none" stroke="#d4af37" stroke-width="1.5" />
+                            <circle cx="0" cy="0" r="45" fill="none" stroke="#d4af37" stroke-width="1" />
+
+                            <!-- Inner petals -->
+                            <g>
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(0)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(45)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(90)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(135)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(180)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(225)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(270)" />
+                                <path
+                                    d="M 0,-40 C 5,-35 7,-30 7,-25 C 7,-20 5,-15 0,-10 C -5,-15 -7,-20 -7,-25 C -7,-30 -5,-35 0,-40 Z"
+                                    fill="none" stroke="#d4af37" stroke-width="1.5" transform="rotate(315)" />
+                            </g>
+
+                            <!-- Center -->
+                            <circle cx="0" cy="0" r="30" fill="none" stroke="#d4af37" stroke-width="1" />
+                            <circle cx="0" cy="0" r="20" fill="none" stroke="#d4af37" stroke-width="1.5" />
+                        </g>
+                    </svg>
+                    <div class="avatar-center">♚</div>
+                </div>
+
                 <% if (user) { %>
-                    <div class="user-avatar-box border-blue-500 ml-[30px] border-4 rounded-full h-[100px] w-[100px]">
+                    <h2 class="player-name">
+                        <%= user.firstName %>
+                    </h2>
+                    <p class="player-title">
+                        <%= user.role %>
+                    </p>
+                    <!-- <div class="player-stats">
+                    <div class="stat">
+                        <span class="stat-value"><%= user.rating %></span>
+                        <span class="stat-label">Rating</span>
                     </div>
-                    <div class="flex flex-col items-start">
-                        <div class="user-name text-5xl text-white font-bold font-family">
-                            <%= user.firstName %>
-                        </div>
-                        <div class="user-role text-lg text-white">
-                            <%= user.role || 'Player' %>
-                        </div>
+                    <div class="stat">
+                        <span class="stat-value"><%= user.wins %></span>
+                        <span class="stat-label">Wins</span>
                     </div>
-                    <% } else { %>
-                        <div
-                            class="user-avatar-box bg-cover bg-center border-blue-500 border-4 rounded-md h-[100px] w-[100px]">
-                        </div>
-                        <div class="flex flex-col items-start">
-                            <div class="user-name text-5xl text-white font-bold font-family">Guest</div>
-                            <div class="user-role text-lg text-white">Player</div>
-                        </div>
-                        <% } %>
+                    <div class="stat">
+                        <span class="stat-value"><%= user.winRate %></span>
+                        <span class="stat-label">Win Rate</span>
+                    </div>
+                </div> -->
+                    <% } %>
             </div>
         </div>
     </div>
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
-        integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+        integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+"
         crossorigin="anonymous"></script>
     <script async crossorigin="anonymous" data-clerk-publishable-key="<%= process.env.CLERK_PUBLISHABLE_KEY %>"
         src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
     <!-- <script src="/js/userbutton.js"></script> -->
     <script src="/js/chessgame.js"></script>
     <script>
+        // let timeLeft = 300; 
+        // const timerElement = document.querySelector('.match-timer');
+        // const statusElement = document.querySelector('.match-status');
+        // const actionBtn = document.querySelector('.action-btn');
+
+
         document.addEventListener('DOMContentLoaded', function () {
             const socket = io();
             let isInQueue = false;
 
             // Add connection logging
             socket.on('connect', () => {
-                console.log('Socket connected:', socket.id);
+                // console.log('Socket connected:', socket.id);
             });
 
             socket.on('disconnect', () => {
-                console.log('Socket disconnected');
+                // console.log('Socket disconnected');
             });
 
             // Better Clerk handling with error checking
             if (window.Clerk) {
                 window.Clerk.load().then(() => {
-                    console.log('Clerk loaded');
+                    // console.log('Clerk loaded');
                     if (window.Clerk.user) {
                         const user = window.Clerk.user;
                         const userData = {
@@ -225,11 +604,11 @@
                             email: user.emailAddresses?.[0]?.emailAddress || 'No email'
                         };
 
-                        console.log('Sending userData:', userData);
+                        // console.log('Sending userData:', userData);
                         socket.emit('joinMatchmaking', userData);
                         isInQueue = true;
                     } else {
-                        console.log('No user found, redirecting to sign-in');
+                        // console.log('No user found, redirecting to sign-in');
                         window.location.href = '/sign-in';
                     }
                 }).catch(error => {
@@ -238,7 +617,7 @@
                     startMatchmakingWithServerData();
                 });
             } else {
-                console.log('Clerk not available, using server data');
+                // console.log('Clerk not available, using server data');
                 startMatchmakingWithServerData();
             }
 
@@ -250,11 +629,11 @@
                         userName: '<%= user.firstName %> <%= user.lastName || "" %>'.trim(),
                         email: '<%= user.emailAddresses && user.emailAddresses[0] ? user.emailAddresses[0].emailAddress : "No email" %>'
                     };
-                    console.log('Using server userData:', userData);
+                    // console.log('Using server userData:', userData);
                     socket.emit('joinMatchmaking', userData);
                     isInQueue = true;
                 <% } else { %>
-                    console.log('No user data available, redirecting');
+                    // console.log('No user data available, redirecting');
                     window.location.href = '/sign-in';
                 <% } %>
             }
@@ -266,12 +645,12 @@
             // });
 
             socket.on('matchFound', function (data) {
-                console.log('Match found!', data);
+                // console.log('Match found!', data);
 
 
                 // Redirect to the game room
                 setTimeout(() => {
-                    console.log('Redirecting to:', `/play/${data.roomId}?color=${data.color}`);
+                    // console.log('Redirecting to:', `/play/${data.roomId}?color=${data.color}`);
                     window.location.href = `/play/${data.roomId}?color=${data.color}`;
                 }, 3500);
             });
@@ -283,7 +662,7 @@
 
             // Add debugging for all socket events
             socket.onAny((eventName, ...args) => {
-                console.log('Socket event received:', eventName, args);
+                // console.log('Socket event received:', eventName, args);
             });
         });
     </script>

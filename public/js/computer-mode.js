@@ -17,13 +17,13 @@ async function computerMove(fen) {
     engineBusy = true;
     try{
         const move = await Svc.getBestMove(fen);
-        console.log('Computer move:', move);
+        // console.log('Computer move:', move);
         const result = window.chesss.move(move);
         if (result) {
             if (typeof window.renderBoard === 'function') window.renderBoard();
             if (typeof window.publishBoardUpdate === 'function') window.publishBoardUpdate();
             if (typeof window.highlightActiveTimer === 'function') window.highlightActiveTimer(game.turn("black") ? 'b' : 'w');
-            console.log('[Engine]', result.san, 'FEN:' , window.chesss.fen());
+            // console.log('[Engine]', result.san, 'FEN:' , window.chesss.fen());
         }
     }
     catch (err) {
@@ -58,7 +58,7 @@ function attachTimerTurnSwitch() {
     document.addEventListener('board:fen',  (e) => {
         const fen = e.detail.fen;
         const turnChar = fen.split(' ')[1];
-        console.log('FEN received for timer switch:', fen, 'turnChar:', turnChar, 'lastTurn:', lastTurn);
+        // console.log('FEN received for timer switch:', fen, 'turnChar:', turnChar, 'lastTurn:', lastTurn);
         if (lastTurn !== turnChar){
             window.LocalTimer.switchTo(turnChar);
             lastTurn = turnChar;

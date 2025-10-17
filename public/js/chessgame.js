@@ -239,7 +239,7 @@ const renderResult = () => {
 function publishBoardUpdate() {
   const fen = chess.fen();
   // const turnChar = fen.split(" ")[1];
-  console.log("FEN:", fen);
+  // console.log("FEN:", fen);
   // console.log("FEN:",turnChar);
   document.dispatchEvent(new CustomEvent("board:fen", { detail: { fen } }));
 }

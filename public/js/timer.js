@@ -82,7 +82,7 @@ if (typeof window !== "undefined") {
       const other = color === 'w' ? 'b' : 'w';
       stopTimer(other);
       startTimer(color, localEmitter);
-      console.log('Timer switched to', color , '-timers:', timers);
+      // console.log('Timer switched to', color , '-timers:', timers);
      },
      reset(initialSeconds = 300){
       timers.w = initialSeconds;
