@@ -1,6 +1,6 @@
 # चतुरङ्ग (Chaturanga) - Ancient Indian Chess Game
 
-A modern web-based chess platform with an authentic ancient Indian aesthetic, featuring real-time multiplayer gameplay, AI opponents, and stunning visual design.
+Working on a modern web-based chess platform with an authentic ancient Indian aesthetic, featuring real-time multiplayer gameplay, AI opponents, and stunning visual design.
 
 ## ✨ Features
 
