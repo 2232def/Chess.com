@@ -41,16 +41,12 @@
       border-radius: 8px;
       overflow: hidden;
       background: #D9B88F;
-
-      /* Main border with glow */
       border: 4px solid #d4af37;
       box-shadow:
         0 0 20px rgba(212, 175, 55, 0.6),
         0 0 40px rgba(212, 175, 55, 0.4),
         0 0 60px rgba(212, 175, 55, 0.2),
         inset 0 0 20px rgba(212, 175, 55, 0.1);
-
-      /* Spike decorations */
     }
 
     .chessboard::before,
@@ -60,20 +56,15 @@
       z-index: -1;
     }
 
-    /* Corner spikes using pseudo-elements and CSS shapes */
     .chessboard::before {
       top: -8px;
       left: -8px;
       right: -8px;
       bottom: -8px;
       background:
-        /* Top-left spike */
         conic-gradient(from 225deg at 0% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Top-right spike */
         conic-gradient(from 315deg at 100% 0%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Bottom-left spike */
         conic-gradient(from 135deg at 0% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg),
-        /* Bottom-right spike */
         conic-gradient(from 45deg at 100% 100%, transparent 0deg, #d4af37 10deg, transparent 20deg);
       filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
     }
@@ -87,19 +78,18 @@
       border: 2px solid rgba(212, 175, 55, 0.3);
       border-radius: 12px;
       background:
-        /* Corner ornaments */
         radial-gradient(circle at 0% 0%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 100% 0%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 0% 100%, #d4af37 2px, transparent 3px),
         radial-gradient(circle at 100% 100%, #d4af37 2px, transparent 3px),
-        /* Side ornaments */
+
         radial-gradient(circle at 50% 0%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 50% 100%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 0% 50%, #d4af37 1px, transparent 2px),
         radial-gradient(circle at 100% 50%, #d4af37 1px, transparent 2px);
     }
 
-    /* Enhanced square styles */
+
     .square {
       display: flex;
       align-items: center;
@@ -120,7 +110,6 @@
       box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
-    /* Enhanced piece styles */
     .piece {
       font-size: 60px;
       cursor: pointer;
@@ -156,7 +145,6 @@
       transform: rotate(180deg);
     }
 
-    /* Enhanced Timer Styles */
     .timer1,
     .timer2 {
       position: fixed !important;
@@ -225,8 +213,6 @@
     .active {
       outline: 2px solid #4caf50;
     }
-
-    /* Enhanced player info styles */
     .player-info {
       transition: all 0.3s ease;
       background: rgba(26, 26, 46, 0.8);
@@ -241,7 +227,6 @@
       box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
-    /* Enhanced avatar styles */
     .player-info .square {
       border: 3px solid #d4af37;
       box-shadow:
@@ -262,15 +247,10 @@
       border: 2px solid rgba(255, 0, 0, 0.8) !important;
     }
 
-    /* Smooth transitions for hover effects */
     .square {
       transition: all 0.2s ease;
     }
 
-
-
-
-    /* Responsive Design */
     @media (max-width: 768px) {
       .chessboard {
         width: 320px;
@@ -340,7 +320,6 @@
       }
     }
 
-    /* Enhanced button styles */
     #copyLinkBtn {
       background: linear-gradient(135deg, #3b82f6, #1e40af);
       border: 2px solid rgba(212, 175, 55, 0.5);

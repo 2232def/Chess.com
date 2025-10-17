@@ -303,7 +303,6 @@
       }
     }
 
-    /* Custom scrollbar for chat */
     .chat-messages-area::-webkit-scrollbar {
       width: 6px;
     }
@@ -419,9 +418,7 @@
   <div class="game-container w-[100vw] h-[100vh] relative overflow-hidden">
     <div class="players h-[100vh] flex flex-col justify-between absolute left-0 top-0 p-4">
       
-      <!-- Top group: player1 + chat stuck together -->
       <div class="top-group flex flex-col">
-        <!-- Opponent (Player 1) -->
         <div class="player1 h-[8vh] w-[300px] relative flex items-center gap-2 player-info">
           <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
             <div id="opponentAvatar" class="h-full w-full flex items-center justify-center font-bold text-black">?</div>
@@ -435,13 +432,11 @@
           </div>
         </div>
 
-        <!-- Chat Box -->
         <div class="chat-box w-[40px] text-white cursor-pointer ">
           <p class="text-sm font-bold mb-2">Chat</p>
         </div>
 
         <div class="chat-ground w-[300px] h-[400px] overflow-hidden bg-white rounded-lg shadow-lg hidden">
-          <!-- Chat Header -->
           <div class="chat-header bg-gradient-to-r from-blue-500 to-blue-600 p-3 flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-blue-600">
               O
@@ -451,13 +446,9 @@
               <p class="text-blue-100 text-xs">Online</p>
             </div>
           </div>
-
-          <!-- Chat Messages Area -->
           <div class="chat-messages-area h-[280px] overflow-y-auto p-3 bg-gray-50" id="chatMessagesArea">
-            <!-- Messages will be dynamically added here -->
           </div>
 
-          <!-- Chat Input Area -->
           <div class="chat-input-area bg-white p-3 border-t border-gray-200 flex gap-2">
             <input 
               type="text" 
@@ -477,7 +468,6 @@
         </div>
       </div>
 
-      <!-- Current Player (Player 2) at bottom -->
       <div class="player2 h-[8vh] w-[300px] relative flex items-center gap-2 player-info">
         <div class="square h-[2rem] w-[2rem] rounded-full border-2 flex border-green-500 bg-white">
           <% if (user) { %>
@@ -507,12 +497,10 @@
       </div>
     </div>
 
-    <!-- Chess Board (centered) -->
     <div class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
       <div class="chessboard bg-red-800"></div>
     </div>
 
-    <!-- Share Link Button -->
     <button id="copyLinkBtn"
       class="bg-blue-500 absolute top-4 right-4 cursor-pointer hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200 z-50">
       Share Game Link

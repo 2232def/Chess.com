@@ -10,22 +10,21 @@
 </head>
 
 <body>
-    <!-- Animated Background Pattern -->
+
     <div class="background-pattern"></div>
 
     <img class="mandala mandala-top" src="/assets/ChatGPT Image Oct 16, 2025, 06_26_35 PM.png" alt="">
     <img class="mandala mandala-center" src="/assets/ChatGPT Image Oct 16, 2025, 06_26_35 PM.png" alt="">
     <img class="mandala mandala-bottom" src="/assets/ChatGPT Image Oct 16, 2025, 06_26_35 PM.png" alt="">
 
-    <!-- Ornamental Corner Borders -->
     <div class="corner-ornament corner-top-left"></div>
     <div class="corner-ornament corner-top-right"></div>
     <div class="corner-ornament corner-bottom-left"></div>
     <div class="corner-ornament corner-bottom-right"></div>
 
-    <!-- Main Container -->
+
     <div class="container">
-        <!-- User Button - Top Right -->
+        
         <div style="position: absolute; top: 20px; right: 20px; z-index: 100;">
             <div id="app"></div>
             <% if (!user) { %>
@@ -36,7 +35,6 @@
                 <% } %>
         </div>
 
-        <!-- Header Section -->
         <header class="header-section">
             <h1 class="main-title">
                 <span class="title-word">Chess</span>
@@ -47,9 +45,7 @@
             <div class="decorative-divider">✦ ◆ ✦</div>
         </header>
 
-        <!-- Main Content Grid -->
         <div class="main-content">
-            <!-- 3D Chess Board -->
             <div class="board-container">
                 <div class="chess-board">
                     <div class="board-frame">
@@ -58,7 +54,6 @@
                 </div>
             </div>
 
-            <!-- Content Section -->
             <div class="content-section">
                 <p class="description">
                     Chaturanga, the ancient predecessor of modern chess, originated in India during the Gupta Empire
@@ -71,7 +66,6 @@
                     of royal heritage.
                 </p>
 
-                <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button class="cta-button" id="findMatchBtn">
                         <span class="button-texture"></span>
@@ -89,7 +83,6 @@
             </div>
         </div>
 
-        <!-- Features Section -->
         <section class="features-section">
             <h2 class="section-title">More Modes</h2>
             <div style="text-align: center; padding: 60px 20px; font-family: 'Cormorant Garamond', serif;">
@@ -101,7 +94,6 @@
         </section>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
         integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
         crossorigin="anonymous"></script>
@@ -110,7 +102,6 @@
     <script src="/js/userbutton.js"></script>
 
     <script>
-        // Generate Chess Board
         const board = document.getElementById('chessBoard');
         const pieces = {
             'r': '♜', 'n': '♞', 'b': '♝', 'q': '♛', 'k': '♚', 'p': '♟',
@@ -141,7 +132,6 @@
             }
         }
 
-        // Ripple Effect for Buttons
         function createRipple(event) {
             const button = event.currentTarget;
             const ripple = document.createElement('span');
@@ -160,8 +150,6 @@
 
             setTimeout(() => ripple.remove(), 600);
         }
-
-        // Initialize
         document.addEventListener('DOMContentLoaded', function () {
             // Generate chess board
             // generateChessBoard();
@@ -182,7 +170,6 @@
                 window.location.href = '/searching';
             });
 
-            // Title Word Animation
             const titleWords = document.querySelectorAll('.title-word');
             let currentIndex = 0;
 
@@ -190,7 +177,7 @@
                 titleWords[currentIndex].classList.remove('active');
                 currentIndex = (currentIndex + 1) % titleWords.length;
                 titleWords[currentIndex].classList.add('active');
-            }, 3000); // Change every 3 seconds
+            }, 3000); 
         });
     </script>
 </body>
