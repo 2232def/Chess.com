@@ -90,7 +90,8 @@ function uciToChessJsMove(uci) {
 }
 
 function getBestMove(fen, callback, errorCallback) {
-  const cacheKey = `${fen}_${computerConfiguration.level}`;
+  const level = computerConfiguration.level || 1; // Default to level 1
+  const cacheKey = `${fen}_${level}`;
   
   // Check cache first
   if (moveCache.has(cacheKey)) {

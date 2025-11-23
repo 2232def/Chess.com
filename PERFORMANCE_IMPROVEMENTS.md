@@ -228,13 +228,34 @@ function updateComputerConfiguration(newConfig) {
 
 ## Future Optimization Opportunities
 
-1. **Debouncing**: Add debouncing to dragover events for even better performance
-2. **Virtual Scrolling**: For move history if lists get very long
-3. **Web Workers**: Move Chess.js calculations to a worker thread
-4. **IndexedDB**: Persist move cache across sessions
-5. **Connection Pooling**: Optimize socket.io connection handling
-6. **Lazy Loading**: Load chess piece images on demand
-7. **Code Splitting**: Split JavaScript bundles for faster initial load
+1. **Timer System Refactoring**: Current timer implementation uses global state which can conflict in multi-game scenarios. Should be refactored to per-game timers stored in the game object.
+2. **Debouncing**: Add debouncing to dragover events for even better performance
+3. **Virtual Scrolling**: For move history if lists get very long
+4. **Web Workers**: Move Chess.js calculations to a worker thread
+5. **IndexedDB**: Persist move cache across sessions
+6. **Connection Pooling**: Optimize socket.io connection handling
+7. **Lazy Loading**: Load chess piece images on demand
+8. **Code Splitting**: Split JavaScript bundles for faster initial load
+
+---
+
+## Known Limitations
+
+### Timer System
+The current timer implementation (`timer.js`) uses global state for interval IDs. This means:
+- Only one game can have active timers at a time reliably
+- In a production multi-game scenario, timers should be stored per-game in the `games` Map
+- The cleanup function correctly stops global timers, but a better architecture would be per-game timer tracking
+
+**Recommended Fix**: Refactor timer system to store timer state in each game object:
+```javascript
+games.set(roomId, {
+  chess: new Chess(),
+  players: {},
+  timers: { w: 300, b: 300 },
+  intervalIds: { w: null, b: null }
+});
+```
 
 ---
 

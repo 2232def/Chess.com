@@ -453,7 +453,9 @@ function cleanupGame(roomId) {
   if (!games.has(roomId)) return;
   
   const game = games.get(roomId);
-  // Stop all timers for this game
+  // Note: Current timer implementation uses global state
+  // In a multi-game scenario, timers should be refactored to be per-game
+  // For now, stop global timers when cleaning up
   stopTimer("w");
   stopTimer("b");
   
