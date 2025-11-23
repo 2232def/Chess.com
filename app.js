@@ -27,13 +27,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socket(server);
 
-const chess = new Chess();
-let players = {};
-
+// Removed unused global chess instance for better memory efficiency
 const games = new Map();
 const playerRooms = new Map();
-
-let currentplayer = "w";
 
 const matchmakingQueue = [];
 
@@ -234,23 +230,14 @@ io.on("connection", function (uniquesocket) {
     uniquesocket.emit("spectatorRole");
   }
 
-  if (
-    game.players.white &&
-    game.playerProfiles.white &&
-    uniquesocket.id === game.players.black
-  ) {
+  // Send existing player info to newly joined player
+  if (game.players.white && game.playerProfiles.white && uniquesocket.id === game.players.black) {
     uniquesocket.emit("playerJoined", {
       color: "white",
       name: game.playerProfiles.white.userName,
       userId: game.playerProfiles.white.userId,
     });
-  }
-
-  if (
-    game.players.black &&
-    game.playerProfiles.black &&
-    uniquesocket.id === game.players.white
-  ) {
+  } else if (game.players.black && game.playerProfiles.black && uniquesocket.id === game.players.white) {
     uniquesocket.emit("playerJoined", {
       color: "black",
       name: game.playerProfiles.black.userName,
@@ -258,6 +245,7 @@ io.on("connection", function (uniquesocket) {
     });
   }
 
+  // Start timers only when both players are present
   if (game.players.white && game.players.black) {
     initTimers(io.to(roomId));
     startTimer(game.chess.turn(), io.to(roomId));
@@ -346,20 +334,17 @@ io.on("connection", function (uniquesocket) {
     const game = games.get(roomId);
 
     if (uniquesocket.id === game.players.white) {
-      delete game.players.white;
       console.log("white disconnected");
       io.to(roomId).emit("gameOver", "White disconnected. Black wins!");
-      game.chess.reset();
-      game.players = {};
-      resetTimers(io);
+      cleanupGame(roomId);
     } else if (uniquesocket.id === game.players.black) {
-      delete game.players.black;
       console.log("black disconnected");
       io.to(roomId).emit("gameOver", "Black disconnected. White wins!");
-      game.chess.reset();
-      game.players = {};
-      resetTimers(io);
+      cleanupGame(roomId);
     }
+    
+    // Clean up player room mapping
+    playerRooms.delete(uniquesocket.id);
   });
 
   uniquesocket.on("move", (move) => {
@@ -461,6 +446,20 @@ function removeFromQueue(socket) {
     return true;
   }
   return false;
+}
+
+// Clean up game resources to prevent memory leaks
+function cleanupGame(roomId) {
+  if (!games.has(roomId)) return;
+  
+  const game = games.get(roomId);
+  // Stop all timers for this game
+  stopTimer("w");
+  stopTimer("b");
+  
+  // Remove the game from the map
+  games.delete(roomId);
+  console.log(`Game cleaned up for room ${roomId}`);
 }
 
 server.listen(3000);

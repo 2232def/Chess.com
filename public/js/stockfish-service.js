@@ -5,6 +5,13 @@ let computerConfiguration = {
 
 const STOCKFISH_API = "https://stockfish.online/api/s/v2.php";
 
+// Cache for storing Stockfish responses to avoid redundant API calls
+const moveCache = new Map();
+const MAX_CACHE_SIZE = 100;
+
+// Track pending requests to prevent concurrent requests for same position
+const pendingRequests = new Map();
+
 const stockfishLevels = {
   1: 1,
   2: 3,
@@ -83,6 +90,20 @@ function uciToChessJsMove(uci) {
 }
 
 function getBestMove(fen, callback, errorCallback) {
+  const cacheKey = `${fen}_${computerConfiguration.level}`;
+  
+  // Check cache first
+  if (moveCache.has(cacheKey)) {
+    const cachedMove = moveCache.get(cacheKey);
+    if (typeof callback === 'function') callback(cachedMove);
+    return Promise.resolve(cachedMove);
+  }
+  
+  // Check if request is already pending
+  if (pendingRequests.has(cacheKey)) {
+    return pendingRequests.get(cacheKey);
+  }
+  
   const url = `${STOCKFISH_API}?${buildQueryParams(fen)}`;
   const p = fetch(url)
     .then(res => {
@@ -93,6 +114,16 @@ function getBestMove(fen, callback, errorCallback) {
       const uci = extractUciToken(data.bestmove);
       if (!uci) throw new Error(`No valid bestmove token in response: ${JSON.stringify(data)}`);
       const move = uciToChessJsMove(uci);
+      
+      // Store in cache
+      moveCache.set(cacheKey, move);
+      
+      // Limit cache size
+      if (moveCache.size > MAX_CACHE_SIZE) {
+        const firstKey = moveCache.keys().next().value;
+        moveCache.delete(firstKey);
+      }
+      
       if (typeof callback === 'function') callback(move);
       return move;
     })
@@ -100,12 +131,25 @@ function getBestMove(fen, callback, errorCallback) {
       console.error('Error getting best move:', err);
       if (typeof errorCallback === 'function') errorCallback(err);
       throw err;
+    })
+    .finally(() => {
+      // Remove from pending requests
+      pendingRequests.delete(cacheKey);
     });
+  
+  // Store pending request
+  pendingRequests.set(cacheKey, p);
   return p;
 }
 
 function updateComputerConfiguration(newConfig) {
+  const levelChanged = newConfig.level && newConfig.level !== computerConfiguration.level;
   computerConfiguration = { ...computerConfiguration, ...newConfig };
+  
+  // Clear cache if level changed since moves will be different
+  if (levelChanged) {
+    moveCache.clear();
+  }
 }
 
 function getComputerConfiguration() {
