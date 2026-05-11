@@ -17,6 +17,9 @@ let sourceSquare = null;
 let playerRole = null;
 let timerFlipped = false;
 
+// Cache Chess instance for move validation to avoid creating new instances on every dragover
+let validationChess = null;
+
 const preferredColor = socket.io.opts.query.preferredColor || null;
 
 let opponentName = null;
@@ -137,10 +140,15 @@ const renderBoard = () => {
           }`,
           promotion: "q",
         };
-        const testChess = new Chess(chess.fen());
+        
+        // Reuse validation chess instance instead of creating new one each time
+        if (!validationChess) {
+          validationChess = new Chess();
+        }
+        validationChess.load(chess.fen());
 
         try {
-          const testMove = testChess.move(move);
+          const testMove = validationChess.move(move);
 
           if (testMove) {
 
