@@ -6,11 +6,11 @@ let computerConfiguration = {
 const STOCKFISH_API = "https://stockfish.online/api/s/v2.php";
 
 const stockfishLevels = {
-  1: 1,
-  2: 3,
-  3: 5,
-  4: 8,
-  5: 12
+  1: 6,
+  2: 8,
+  3: 10,
+  4: 12,
+  5: 15
 };
 
 const FENChar = {
@@ -90,6 +90,7 @@ function getBestMove(fen, callback, errorCallback) {
       return res.json();
     })
     .then(data => {
+      if (!data.success) throw new Error(data.error || 'Stockfish API failed: success was false');
       const uci = extractUciToken(data.bestmove);
       if (!uci) throw new Error(`No valid bestmove token in response: ${JSON.stringify(data)}`);
       const move = uciToChessJsMove(uci);
