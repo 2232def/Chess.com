@@ -129,7 +129,7 @@ app.get(
 );
 
 app.get("/sign-in", (req, res) => {
-  res.render("sign-in");
+  res.render("sign-in", { clerkPublishableKey: process.env.CLERK_PUBLISHABLE_KEY });
 });
 
 app.get("/createlink", (req, res) => {
